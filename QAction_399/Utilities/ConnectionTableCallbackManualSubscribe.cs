@@ -5,8 +5,8 @@
 	using System.Linq;
 	using Newtonsoft.Json;
 	using QAction_399.Models;
-	using Skyline.DataMiner.Helper.OpenConfig.Enums;
-	using Skyline.DataMiner.Helper.OpenConfig.Models;
+	using Skyline.DataMiner.DataSources.OpenConfig.Gnmi.Models;
+	using Skyline.DataMiner.DataSources.OpenConfig.Gnmi.Protocol.DataMapper.Args;
 	using Skyline.DataMiner.Scripting;
 
 	/// <summary>
@@ -15,7 +15,6 @@
 	internal class ConnectionTableCallbackManualSubscribe : ConnectionTableCallback
 	{
 		private readonly object _lock;
-		private readonly SLProtocol _protocol;
 		private readonly HashSet<string> _primaryKeyParameterValues;
 		private readonly HashSet<string> _reportedPrimaryKeys;
 
@@ -26,7 +25,6 @@
 		public ConnectionTableCallbackManualSubscribe(SLProtocol protocol) : base(protocol)
 		{
 			_lock = new object();
-			_protocol = protocol;
 			_primaryKeyParameterValues = new HashSet<string>();
 			_reportedPrimaryKeys = new HashSet<string>();
 		}
@@ -68,7 +66,7 @@
 			}
 			catch (Exception ex)
 			{
-				_protocol.Log("QA" + _protocol.QActionID + "|-1|HandleIncomingResponseOpenflow|Exception thrown:" + Environment.NewLine + ex, LogType.Error, LogLevel.NoLogging);
+				Protocol.Log("QA" + Protocol.QActionID + "|-1|HandleIncomingResponseOpenflow|Exception thrown:" + Environment.NewLine + ex, LogType.Error, LogLevel.NoLogging);
 			}
 		}
 
@@ -79,7 +77,7 @@
 		{
 			lock (_lock)
 			{
-				object[] cols = (object[])_protocol.NotifyProtocol((int)Skyline.DataMiner.Net.Messages.NotifyType.NT_GET_TABLE_COLUMNS, Parameter.Openflowsecondcontrollerconnectionssubscribed.tablePid, new uint[] { Parameter.Openflowsecondcontrollerconnectionssubscribed.Idx.openflowsecondcontrollerconnectionssubscribedpk });
+				object[] cols = (object[])Protocol.NotifyProtocol((int)Skyline.DataMiner.Net.Messages.NotifyType.NT_GET_TABLE_COLUMNS, Parameter.Openflowsecondcontrollerconnectionssubscribed.tablePid, new uint[] { Parameter.Openflowsecondcontrollerconnectionssubscribed.Idx.openflowsecondcontrollerconnectionssubscribedprimarykey });
 				if (cols == null || cols.Length < 1)
 				{
 					return;
@@ -118,7 +116,7 @@
 				_primaryKeyParameterValues.Remove(pk);
 			}
 
-			_protocol.DeleteRow(Parameter.Openflowsecondcontrollerconnectionssubscribed.tablePid, oldKeys.ToArray());
+			Protocol.DeleteRow(Parameter.Openflowsecondcontrollerconnectionssubscribed.tablePid, oldKeys.ToArray());
 		}
 
 		/// <summary>
@@ -131,15 +129,15 @@
 		{
 			return new OpenflowsecondcontrollerconnectionssubscribedQActionRow
 			{
-				Openflowsecondcontrollerconnectionssubscribedpk = pk,
+				Openflowsecondcontrollerconnectionssubscribedprimarykey = pk,
 				Openflowsecondcontrollerconnectionssubscribedauxiliaryid = connectionState.AuxId,
 				Openflowsecondcontrollerconnectionssubscribedpriority = connectionState.Priority,
 				Openflowsecondcontrollerconnectionssubscribedipaddress = connectionState.Address,
 				Openflowsecondcontrollerconnectionssubscribedport = connectionState.Port,
-				Openflowsecondcontrollerconnectionssubscribedtransport = ConvertTransportType(DataValueOriginType.Poll, pk, connectionState.Transport, DateTime.UtcNow),
+				Openflowsecondcontrollerconnectionssubscribedtransportprotocol = ConvertTransportType(new DataMinerConnectorRawValueArgs { Value = connectionState.Transport }),
 				Openflowsecondcontrollerconnectionssubscribedcertificateid = connectionState.CertificateId == null ? "-1" : connectionState.CertificateId,
 				Openflowsecondcontrollerconnectionssubscribedsourceinterface = connectionState.SourceInterface,
-				Openflowsecondcontrollerconnectionssubscribedstate = ConvertBoolType(DataValueOriginType.Poll, pk, connectionState.Connected, DateTime.UtcNow),
+				Openflowsecondcontrollerconnectionssubscribedstate = ConvertBoolType(new DataMinerConnectorRawValueArgs { Value = connectionState.Connected }),
 				Openflowsecondcontrollerconnectionssubscribeddisplaykey = CreateKey(connectionState.AuxId, connectionState.Address, connectionState.Port),
 			};
 		}
@@ -169,7 +167,7 @@
 				rows.Add(FillSecondConnectionSubscribedRow(pk, connection.State));
 			}
 
-			QActionTable table = new QActionTable(_protocol, Parameter.Openflowsecondcontrollerconnectionssubscribed.tablePid, String.Empty);
+			QActionTable table = new QActionTable(Protocol, Parameter.Openflowsecondcontrollerconnectionssubscribed.tablePid, String.Empty);
 			table.FillArrayNoDelete(rows);
 		}
 	}

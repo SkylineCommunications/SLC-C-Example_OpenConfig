@@ -2,16 +2,16 @@ using System;
 using System.Collections.Generic;
 using QAction_399.ModelHelpers;
 using QAction_399.Utilities;
-using Skyline.DataMiner.Helper.OpenConfig.Api;
-using Skyline.DataMiner.Helper.OpenConfig.DataMapper;
-using Skyline.DataMiner.Helper.OpenConfig.Models;
-using Skyline.DataMiner.Helper.OpenConfig.Utils;
+using Skyline.DataMiner.DataSources.OpenConfig.Gnmi.Api;
+using Skyline.DataMiner.DataSources.OpenConfig.Gnmi.Models;
+using Skyline.DataMiner.DataSources.OpenConfig.Gnmi.Protocol.DataMapper;
+using Skyline.DataMiner.DataSources.OpenConfig.Gnmi.Utils;
 using Skyline.DataMiner.Scripting;
 
 /// <summary>
 /// DataMiner QAction Class.
 /// </summary>
-public class QAction : IDisposable
+public sealed class QAction : IDisposable
 {
 	private const string OPENFLOW_SUBSCRIPTION_NAME = "openflow";
 	private const string SYSTEM_SUBSCRIPTION_NAME = "system";
@@ -27,6 +27,12 @@ public class QAction : IDisposable
 	private bool isDisposed;
 
 	private bool isSubscribed;
+
+	/// <summary>
+	/// Indicates if the gNMI client is busy connecting.
+	/// </summary>
+	/// <remarks>Waiting on gNMI client connection takes 15s timeout when not available. Poll group is executed every 10s. Without this boolean there are threads starting at a higher rate than are finishing, which leads to a thread memory leak.</remarks>
+	private bool isConnecting;
 
 	private SLProtocol _protocol;
 
@@ -81,10 +87,44 @@ public class QAction : IDisposable
 	}
 
 	/// <summary>
+	/// Reads out the configuration to connect with the gNMI client.
+	/// </summary>
+	/// <param name="protocol">Link with SLProtocol.</param>
+	/// <returns>Configuration that is needed to connect.</returns>
+	private static DataSourceConfiguration ReadConfiguration(SLProtocol protocol)
+	{
+		DataSourceConfiguration dataSourceConfiguration = new DataSourceConfiguration();
+
+		if (!protocol.IsEmpty(Parameter.datasourceip))
+		{
+			dataSourceConfiguration.IpAddress = Convert.ToString(protocol.GetParameter(Parameter.datasourceip));
+		}
+
+		if (!protocol.IsEmpty(Parameter.datasourceport))
+		{
+			dataSourceConfiguration.Port = Convert.ToUInt32(protocol.GetParameter(Parameter.datasourceport));
+		}
+
+		if (!protocol.IsEmpty(Parameter.datasourceusername))
+		{
+			dataSourceConfiguration.UserName = Convert.ToString(protocol.GetParameter(Parameter.datasourceusername));
+		}
+
+		if (!protocol.IsEmpty(Parameter.datasourcepassword))
+		{
+			dataSourceConfiguration.Password = Convert.ToString(protocol.GetParameter(Parameter.datasourcepassword));
+		}
+
+		dataSourceConfiguration.ClientCertificate = Convert.ToString(protocol.GetParameter(Parameter.clientcertificate));
+
+		return dataSourceConfiguration;
+	}
+
+	/// <summary>
 	/// Disposing the QAction, this will dispose the internal gNMI client.
 	/// </summary>
 	/// <param name="disposing">Boolean indicating if the QAction is being disposed.</param>
-	protected virtual void Dispose(bool disposing)
+	private void Dispose(bool disposing)
 	{
 		if (disposing && !isDisposed)
 		{
@@ -102,24 +142,24 @@ public class QAction : IDisposable
 	{
 		try
 		{
-			if (isSubscribed)
+			if (isSubscribed || isConnecting)
 			{
-				return;
+				return; // Is already subscribed so this thread can return without having to wait for the lock.
 			}
 
 			lock(clientLock)
 			{
-				if (isSubscribed)
+				if (isSubscribed || isConnecting)
 				{
-					return;
+					return; // Subscription happened while waiting on lock so this thread can return.
 				}
 
 				ConnectionTableCallbackManualSubscribe tableCallback = new ConnectionTableCallbackManualSubscribe(protocol);
 				tableCallback.ReadPrimaryKeysSecondConnectionSubscribed();
-				uint sampleIntervalMs = 10000; // expecting values back every 10s. An interval is needed to calculate a correct rate.
+				TimeSpan sampleInterval = TimeSpan.FromSeconds(10); // expecting values back every 10s. An interval is needed to calculate a correct rate.
 				var client = GetClient(protocol);
 				client.Subscribe(SYSTEM_SUBSCRIPTION_NAME, new[] { dataMapper.GetPathForPid(Parameter.systemstatecurrentdatetime) });  // The datetime is the only value that updates on the Onos (once per second). Path is known by the DataMapper, parameter value will be filled in automatically and no further parsing will be needed.
-				client.Subscribe(OPENFLOW_SUBSCRIPTION_NAME, sampleIntervalMs, new[] { "system/openflow/controllers/controller[name='second']/connections" }, tableCallback.HandleIncomingResponseOpenflow); // Path is not known by the DataMapper, this will need to be parsed manually in HandleIncomingResponseOpenflow.
+				client.Subscribe(OPENFLOW_SUBSCRIPTION_NAME, sampleInterval, new[] { "system/openflow/controllers/controller[name='second']/connections" }, tableCallback.HandleIncomingResponseOpenflow); // Path is not known by the DataMapper, this will need to be parsed manually in HandleIncomingResponseOpenflow.
 
 				// client.Subscribe("interfaces", sampleIntervalMs, interfaceGroup); // Note, the Onos throws an error when subscribing to this table, breaking communication.
 				isSubscribed = true;
@@ -154,14 +194,34 @@ public class QAction : IDisposable
 			}
 			else
 			{
-				// Only changes the configuration internally if it's different.
-				gnmiClient.ChangeConfiguration(config);
+				try
+				{
+					// Only changes the configuration internally if it's different.
+					isConnecting = true;
+					gnmiClient.ChangeConfiguration(config);
+					isConnecting = false;
+				}
+				catch
+				{
+					isConnecting = false;
+					throw;
+				}
 			}
 
 			if (!gnmiClient.IsConnected)
 			{
 				protocol.Log("QA" + protocol.QActionID + "|" + protocol.GetTriggerParameter() + "|GetClient|Connecting...", LogType.Information, LogLevel.NoLogging);
-				gnmiClient.Connect();
+				try
+				{
+					isConnecting = true;
+					gnmiClient.Connect();
+					isConnecting = false;
+				}
+				catch
+				{
+					isConnecting = false;
+					throw;
+				}
 			}
 
 			return gnmiClient;
@@ -211,6 +271,11 @@ public class QAction : IDisposable
 	{
 		try
 		{
+			if (isConnecting)
+			{
+				return; // Another thread is already busy connecting. Returning.
+			}
+
 			var client = GetClient(protocol);
 			CapabilitiesHelper.PollCapabilities(protocol, client);
 			SystemHelper.PollSystemState(protocol, client, systemGroup);
@@ -221,40 +286,6 @@ public class QAction : IDisposable
 		{
 			protocol.Log("QA" + protocol.QActionID + "|" + protocol.GetTriggerParameter() + "|PollNotSubscribedData|Exception thrown:" + Environment.NewLine + ex, LogType.Error, LogLevel.NoLogging);
 		}
-	}
-
-	/// <summary>
-	/// Reads out the configuration to connect with the gNMI client.
-	/// </summary>
-	/// <param name="protocol">Link with SLProtocol.</param>
-	/// <returns>Configuration that is needed to connect.</returns>
-	private DataSourceConfiguration ReadConfiguration(SLProtocol protocol)
-	{
-		DataSourceConfiguration dataSourceConfiguration = new DataSourceConfiguration();
-
-		if (!protocol.IsEmpty(Parameter.datasourceip))
-		{
-			dataSourceConfiguration.IpAddress = Convert.ToString(protocol.GetParameter(Parameter.datasourceip));
-		}
-
-		if (!protocol.IsEmpty(Parameter.datasourceport))
-		{
-			dataSourceConfiguration.Port = Convert.ToUInt32(protocol.GetParameter(Parameter.datasourceport));
-		}
-
-		if (!protocol.IsEmpty(Parameter.datasourceusername))
-		{
-			dataSourceConfiguration.UserName = Convert.ToString(protocol.GetParameter(Parameter.datasourceusername));
-		}
-
-		if (!protocol.IsEmpty(Parameter.datasourcepassword))
-		{
-			dataSourceConfiguration.Password = Convert.ToString(protocol.GetParameter(Parameter.datasourcepassword));
-		}
-
-		dataSourceConfiguration.ClientCertificate = Convert.ToString(protocol.GetParameter(Parameter.clientcertificate));
-
-		return dataSourceConfiguration;
 	}
 
 	/// <summary>
@@ -299,20 +330,20 @@ public class QAction : IDisposable
 				new DataMinerConnectorParameter("system/openflow/agent/config/failure-mode", Parameter.openflowfailuremode_3001) { OnRawValueChange = ValueConverter.ConvertToFailureModeStateEnumValue },
 				new DataMinerConnectorParameter("system/openflow/agent/config/backoff-interval", Parameter.openflowbackoffinterval_3002),
 				new DataMinerConnectorParameter("system/openflow/agent/config/max-backoff", Parameter.openflowmaxbackoff_3003),
-				new DataMinerConnectorParameter("system/openflow/agent/config/inactivity-probe", Parameter.openflowinactivityprobe_3004),
+				new DataMinerConnectorParameter("system/openflow/agent/config/inactivity-probe", Parameter.openflowinactivityprobeperiod_3004),
 				new DataMinerConnectorDataGrid("system/openflow/controllers/controller[name='main']/connections/openconfig-openflow:connection<aux-id>", Parameter.Openflowmaincontrollerconnections.tablePid, new List<IDataMinerConnectorDataGridColumn>
 				{
 					new DataMinerConnectorDataGridColumn("state/aux-id", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsauxiliaryid, notAvailable),
 					new DataMinerConnectorDataGridColumn("state/priority", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionspriority, notAvailable),
 					new DataMinerConnectorDataGridColumn("state/address", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsipaddress, notAvailable),
 					new DataMinerConnectorDataGridColumn("state/port", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsport, notAvailable),
-					new DataMinerConnectorDataGridColumn("state/transport", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionstransport, notAvailable) { OnRawValueChange = tableCallback.ConvertTransportType },
+					new DataMinerConnectorDataGridColumn("state/transport", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionstransportprotocol, notAvailable) { OnRawValueChange = tableCallback.ConvertTransportType },
 					new DataMinerConnectorDataGridColumn("state/certificate-id", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionscertificateid, notAvailable),
 					new DataMinerConnectorDataGridColumn("state/source-interface", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionssourceinterface, notAvailable),
-					new DataMinerConnectorDataGridColumn("state/connected", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsstate, notAvailable) { OnRawValueChange = tableCallback.ConvertBoolType },
+					new DataMinerConnectorDataGridColumn("state/connected", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsstate, notAvailable) { OnRawValueChange = ConnectionTableCallback.ConvertBoolType },
 					new DataMinerConnectorDataGridColumn(Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsdisplaykey, notAvailable)
 					{
-						OnTriggerValueChange = tableCallback.CreateKey,
+						OnTriggerValueChange = ConnectionTableCallback.CreateKey,
 						TriggerColumnParameterIds = new List<int>
 						{
 							Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsauxiliaryid,
@@ -366,7 +397,7 @@ public class QAction : IDisposable
 		systemGroup.Add(dataMapper.GetPathForPid(Parameter.openflowfailuremode));
 		systemGroup.Add(dataMapper.GetPathForPid(Parameter.openflowbackoffinterval));
 		systemGroup.Add(dataMapper.GetPathForPid(Parameter.openflowmaxbackoff));
-		systemGroup.Add(dataMapper.GetPathForPid(Parameter.openflowinactivityprobe));
+		systemGroup.Add(dataMapper.GetPathForPid(Parameter.openflowinactivityprobeperiod));
 
 		openflowGroup.Clear();
 		openflowGroup.Add(dataMapper.GetPathForPid(Parameter.Openflowmaincontrollerconnections.tablePid));

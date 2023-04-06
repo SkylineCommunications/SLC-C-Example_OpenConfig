@@ -4,8 +4,8 @@
 	using System.Collections.Generic;
 	using Newtonsoft.Json;
 	using QAction_399.Models;
-	using Skyline.DataMiner.Helper.OpenConfig.Api;
-	using Skyline.DataMiner.Helper.OpenConfig.Models;
+	using Skyline.DataMiner.DataSources.OpenConfig.Gnmi.Api;
+	using Skyline.DataMiner.DataSources.OpenConfig.Gnmi.Models;
 	using Skyline.DataMiner.Scripting;
 
 	internal static class SystemHelper

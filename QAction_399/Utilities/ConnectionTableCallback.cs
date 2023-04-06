@@ -1,9 +1,8 @@
 ﻿namespace QAction_399.Utilities
 {
 	using System;
-	using System.Collections.Generic;
 	using System.Text;
-	using Skyline.DataMiner.Helper.OpenConfig.Enums;
+	using Skyline.DataMiner.DataSources.OpenConfig.Gnmi.Protocol.DataMapper.Args;
 	using Skyline.DataMiner.Scripting;
 
 	/// <summary>
@@ -11,80 +10,50 @@
 	/// </summary>
 	internal class ConnectionTableCallback
 	{
-		private readonly SLProtocol _protocol;
-
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ConnectionTableCallback"/> class.
 		/// </summary>
 		/// <param name="protocol">Link with SLProtocol.</param>
 		public ConnectionTableCallback(SLProtocol protocol)
 		{
-			_protocol = protocol;
+			Protocol = protocol;
 		}
+
+		/// <summary>
+		/// Gets the protocol object from the constructor. Do not use this object to get to specific items like GetTriggerParameter().
+		/// </summary>
+		protected SLProtocol Protocol { get; }
 
 		/// <summary>
 		/// Converts the raw value into a matching discreet parameter value.
 		/// </summary>
-		/// <param name="origin">Indicates where the value originated from.</param>
-		/// <param name="pk">Primary key of the row.</param>
-		/// <param name="value">Raw value from the data source.</param>
-		/// <param name="timestamp">Timestamp of the raw value.</param>
+		/// <param name="rawValue">Raw value that enters from data source.</param>
 		/// <returns>Converted value to be set on the parameter.</returns>
-		public object ConvertTransportType(DataValueOriginType origin, string pk, object value, DateTime timestamp)
+		public static string ConvertBoolType(DataMinerConnectorRawValueArgs rawValue)
 		{
-			string error = "-2";
-			try
+			string error = "-1";
+			if (rawValue == null)
 			{
-				string sVal = Convert.ToString(value);
-				if (String.IsNullOrEmpty(sVal))
-				{
-					return error;
-				}
-
-				switch (sVal)
-				{
-					case "TCP": return "1";
-					case "TLS": return "2";
-					default: return error;
-				}
-			}
-			catch (Exception ex)
-			{
-				_protocol.Log("QA" + _protocol.QActionID + "|-1|ConvertTransportType|Exception thrown:" + Environment.NewLine + ex, LogType.Error, LogLevel.NoLogging);
 				return error;
 			}
-		}
 
-		/// <summary>
-		/// Converts the raw value into a matching discreet parameter value.
-		/// </summary>
-		/// <param name="origin">Indicates where the value originated from.</param>
-		/// <param name="pk">Primary key of the row.</param>
-		/// <param name="value">Raw value from the data source.</param>
-		/// <param name="timestamp">Timestamp of the raw value.</param>
-		/// <returns>Converted value to be set on the parameter.</returns>
-		public object ConvertBoolType(DataValueOriginType origin, string pk, object value, DateTime timestamp)
-		{
-			if (value is bool bValue)
+			if (rawValue.Value is bool bValue)
 			{
 				return bValue ? "1" : "0";
 			}
 
-			return "-1";
+			return error;
 		}
 
 		/// <summary>
 		/// Creates a new display key based on the other values. Used by the DataMapper.
 		/// </summary>
-		/// <param name="origin">Indicates where the value originated from.</param>
-		/// <param name="pk">Primary key of the row.</param>
-		/// <param name="values">Mapping between the parameter ID and the parameter value.</param>
-		/// <param name="timestamp">Timestamp of the raw values.</param>
+		/// <param name="triggerValues">Values that are part of the display key.</param>
 		/// <returns>Created display key to be set on the parameter.</returns>
-		public object CreateKey(DataValueOriginType origin, string pk, Dictionary<int, object> values, DateTime timestamp)
+		public static string CreateKey(DataMinerConnectorTriggerValueArgs triggerValues)
 		{
 			StringBuilder stringBuilder = new StringBuilder();
-			if (values.TryGetValue(Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsauxiliaryid, out object oAuxId))
+			if (triggerValues.Values.TryGetValue(Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsauxiliaryid, out object oAuxId))
 			{
 				string auxId = Convert.ToString(oAuxId);
 				if (auxId == "0")
@@ -96,11 +65,11 @@
 			}
 			else
 			{
-				stringBuilder.Append(pk);
+				stringBuilder.Append(triggerValues.PrimaryKey);
 			}
 
 			stringBuilder.Append("-");
-			if (values.TryGetValue(Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsipaddress, out object address))
+			if (triggerValues.Values.TryGetValue(Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsipaddress, out object address))
 			{
 				stringBuilder.Append(Convert.ToString(address));
 			}
@@ -110,7 +79,7 @@
 			}
 
 			stringBuilder.Append(":");
-			if (values.TryGetValue(Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsport, out object port))
+			if (triggerValues.Values.TryGetValue(Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsport, out object port))
 			{
 				stringBuilder.Append(Convert.ToString(port));
 			}
@@ -129,7 +98,7 @@
 		/// <param name="address">IP address.</param>
 		/// <param name="port">TCP port.</param>
 		/// <returns>Created display key to be set on the parameter.</returns>
-		public string CreateKey(int auxId, string address, int port)
+		public static string CreateKey(int auxId, string address, int port)
 		{
 			StringBuilder stringBuilder = new StringBuilder();
 			if (auxId == 0)
@@ -162,6 +131,41 @@
 			}
 
 			return stringBuilder.ToString();
+		}
+
+		/// <summary>
+		/// Converts the raw value into a matching discreet parameter value.
+		/// </summary>
+		/// <param name="rawValue">Raw value that enters from data source.</param>
+		/// <returns>Converted value to be set on the parameter.</returns>
+		public string ConvertTransportType(DataMinerConnectorRawValueArgs rawValue)
+		{
+			string error = "-2";
+			if (rawValue == null)
+			{
+				return error;
+			}
+
+			try
+			{
+				string sVal = Convert.ToString(rawValue.Value);
+				if (String.IsNullOrEmpty(sVal))
+				{
+					return error;
+				}
+
+				switch (sVal)
+				{
+					case "TCP": return "1";
+					case "TLS": return "2";
+					default: return error;
+				}
+			}
+			catch (Exception ex)
+			{
+				Protocol.Log("QA" + Protocol.QActionID + "|-1|ConvertTransportType|Exception thrown:" + Environment.NewLine + ex, LogType.Error, LogLevel.NoLogging);
+				return error;
+			}
 		}
 	}
 }

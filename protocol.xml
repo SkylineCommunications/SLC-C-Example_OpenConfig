@@ -59,7 +59,7 @@ Any inquiries can be addressed to:
 
 	<Compliancies>
 		<CassandraReady>true</CassandraReady>
-		<MinimumRequiredVersion>10.0.10.0 - 9454</MinimumRequiredVersion>
+		<MinimumRequiredVersion>10.3.3.0 - 12753</MinimumRequiredVersion>
 	</Compliancies>
 
 	<Params>
@@ -358,7 +358,7 @@ Any inquiries can be addressed to:
 		</Param>
 		<Param id="22" trending="false" save="true">
 			<Name>GrpcConnectionState</Name>
-			<Description>Grpc Connection State</Description>
+			<Description>gRPC Connection State</Description>
 			<Type>read</Type>
 			<Information>
 				<Subtext>Keeps track of the gRPC connection state to know if timeout has been set or not.</Subtext>
@@ -397,9 +397,214 @@ Any inquiries can be addressed to:
 				<Type>string</Type>
 			</Measurement>
 		</Param>
+		<Param id="103" trending="true">
+			<Name>AsciiEncoding</Name>
+			<Description>ASCII Encoding</Description>
+			<Information>
+				<Subtext>Indicates if ASCII text of an out-of-band agreed format encoding is supported or not.</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Capabilities</Page>
+						<Column>0</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- SuppressValidator 2.5.1 User specific -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Not Supported</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Supported</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="104" trending="true">
+			<Name>BytesEncoding</Name>
+			<Description>Bytes Encoding</Description>
+			<Information>
+				<Subtext>Indicates if arbitrarily encoded bytes encoding is supported or not.</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Capabilities</Page>
+						<Column>0</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- SuppressValidator 2.5.1 User specific -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Not Supported</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Supported</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="105" trending="true">
+			<Name>JsonEncoding</Name>
+			<Description>JSON Encoding</Description>
+			<Information>
+				<Subtext>Indicates if JSON encoded text is supported or not.</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Capabilities</Page>
+						<Column>0</Column>
+						<Row>3</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- SuppressValidator 2.5.1 User specific -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Not Supported</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Supported</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="106" trending="true">
+			<Name>JsonIetfEncoding</Name>
+			<Description>JSON IETF Encoding</Description>
+			<Information>
+				<Subtext>Indicates if JSON encoded text as per RFC7951 is supported or not.</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Capabilities</Page>
+						<Column>0</Column>
+						<Row>4</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- SuppressValidator 2.5.1 User specific -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Not Supported</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Supported</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="107" trending="true">
+			<Name>ProtoEncoding</Name>
+			<Description>Proto Encoding</Description>
+			<Information>
+				<Subtext>Indicates if encoding according to scalar values of TypedValue is supported or not.</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Capabilities</Page>
+						<Column>0</Column>
+						<Row>5</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<!-- SuppressValidator 2.5.1 User specific -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<!-- /SuppressValidator 2.5.1 -->
+			<Measurement>
+				<Type>discreet</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Not Supported</Display>
+						<Value>0</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Supported</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
 		
 		<Param id="406" trending="false">
-			<Name>SystemStateCurrentDateTime</Name>
+			<Name>SystemStateCurrentDatetime</Name>
 			<Description>Current Datetime</Description>
 			<Information>
 				<Subtext>The system's current datetime when last polled.</Subtext>
@@ -583,7 +788,7 @@ Any inquiries can be addressed to:
 					<Position>
 						<Page>Capabilities</Page>
 						<Column>0</Column>
-						<Row>1</Row>
+						<Row>6</Row>
 					</Position>
 				</Positions>
 			</Display>
@@ -728,7 +933,7 @@ Any inquiries can be addressed to:
 			</Display>
 			<Measurement>
 				<!-- SuppressValidator 2.31.9 Sorting on datetime column not needed. -->
-				<Type options="tab=columns:2001|0-2030|29-2002|1-2003|2-2004|3-2005|4-2006|5-2007|6-2008|7-2009|8-2010|9-2011|10-2012|11-2013|12-2014|13-2015|14-2016|15-2017|16-2018|17-2019|18-2020|19-2021|20-2022|21-2023|22-2024|23-2025|24-2026|25-2027|26-2028|27-2029|28-2031|30-2032|31-2033|32-2034|33,width:100-116-100-100-109-100-100-104-100-123-144-100-100-100-120-134-131-100-100-143-100-100-100-130-144-141-100-100-121-124-120-120-120-120,sort:STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING,lines:25,filter:true">table</Type>
+				<Type options="tab=columns:2001|0-2030|29-2002|1-2003|2-2004|3-2005|4-2006|5-2007|6-2008|7-2009|8-2010|9-2011|10-2012|11-2013|12-2014|13-2015|14-2016|15-2017|16-2018|17-2019|18-2020|19-2021|20-2022|21-2023|22-2024|23-2025|24-2026|25-2027|26-2028|27-2029|28-2031|30-2032|31-2033|32-2034|33,width:100-116-100-100-109-100-100-104-100-123-144-100-100-100-120-134-131-100-100-143-100-100-100-130-144-141-100-100-121-145-120-120-120-120,sort:STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING,lines:25,filter:true">table</Type>
 				<!-- /SuppressValidator 2.31.9 -->
 			</Measurement>
 		</Param>
@@ -2180,10 +2385,10 @@ The lower 48-bits are for a MAC address, while the upper 16-bits are implementer
 			</Measurement>
 		</Param>
 		<Param id="3002" trending="true">
-			<Name>OpenflowBackoffInterval</Name>
-			<Description>Backoff Interval</Description>
+			<Name>OpenflowBackOffInterval</Name>
+			<Description>Back off Interval</Description>
 			<Information>
-				<Subtext>The OpenFlow agent connection backoff interval.</Subtext>
+				<Subtext>The OpenFlow agent connection back off interval.</Subtext>
 			</Information>
 			<Type>read</Type>
 			<Interprete>
@@ -2224,7 +2429,7 @@ The lower 48-bits are for a MAC address, while the upper 16-bits are implementer
 			<Name>OpenflowMaxBackOff</Name>
 			<Description>Maximum Back Off</Description>
 			<Information>
-				<Subtext>The OpenFlow agent maximum backoff time.</Subtext>
+				<Subtext>The OpenFlow agent maximum back off time.</Subtext>
 			</Information>
 			<Type>read</Type>
 			<Interprete>
@@ -2262,8 +2467,8 @@ The lower 48-bits are for a MAC address, while the upper 16-bits are implementer
 			</Measurement>
 		</Param>
 		<Param id="3004" trending="true">
-			<Name>OpenflowInactivityProbe</Name>
-			<Description>Inactivity Probe</Description>
+			<Name>OpenflowInactivityProbePeriod</Name>
+			<Description>Inactivity Probe Period</Description>
 			<Information>
 				<Subtext>The OpenFlow agent inactivity probe period.</Subtext>
 			</Information>
@@ -2333,12 +2538,12 @@ The lower 48-bits are for a MAC address, while the upper 16-bits are implementer
 				</Positions>
 			</Display>
 			<Measurement>
-				<Type options="tab=columns:3101|0-3110|9-3102|1-3103|2-3104|3-3105|4-3106|5-3107|6-3108|7-3109|8,width:0-150-100-100-100-100-100-100-100-100,sort:STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING,lines:25,filter:true">table</Type>
+				<Type options="tab=columns:3101|0-3110|9-3102|1-3103|2-3104|3-3105|4-3106|5-3107|6-3108|7-3109|8,width:0-150-100-100-100-100-125-100-115-100,sort:STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING,lines:25,filter:true">table</Type>
 			</Measurement>
 		</Param>
 		<Param id="3101" trending="false">
-			<Name>OpenflowMainControllerConnectionsPk</Name>
-			<Description>PK (Openflow Main Controller Connections)</Description>
+			<Name>OpenflowMainControllerConnectionsPrimaryKey</Name>
+			<Description>Primary Key (Openflow Main Controller Connections)</Description>
 			<Type>read</Type>
 			<Information>
 				<Subtext>This is the key used internally by DataMiner to identify the table entries.</Subtext>
@@ -2357,7 +2562,7 @@ The lower 48-bits are for a MAC address, while the upper 16-bits are implementer
 		</Param>
 		<Param id="3102" trending="false">
 			<Name>OpenflowMainControllerConnectionsAuxiliaryId</Name>
-			<Description>Auxiliary Id (Openflow Main Controller Connections)</Description>
+			<Description>Auxiliary ID (Openflow Main Controller Connections)</Description>
 			<Type>read</Type>
 			<Information>
 				<Subtext><![CDATA[Controller auxiliary ID. Must be 0 for the main controller.
@@ -2481,14 +2686,14 @@ The lower 48-bits are for a MAC address, while the upper 16-bits are implementer
 			</Measurement>
 		</Param>
 		<Param id="3106" trending="true">
-			<Name>OpenflowMainControllerConnectionsTransport</Name>
-			<Description>Transport (Openflow Main Controller Connections)</Description>
+			<Name>OpenflowMainControllerConnectionsTransportProtocol</Name>
+			<Description>Transport Protocol (Openflow Main Controller Connections)</Description>
 			<Type>read</Type>
 			<Information>
 				<Subtext><![CDATA[Controller transport protocol used:
 					TCP (Transmission Control Protocol)
 					TLS (Transport Layer Security)
-					Unresolvable: Enumerable value cannot be resolved to a valid discreet value.
+					Unresolvable: Enumerable value cannot be resolved to a valid transport value.
 					N/A: value is not present.]]></Subtext>
 			</Information>
 			<Interprete>
@@ -2675,12 +2880,12 @@ The lower 48-bits are for a MAC address, while the upper 16-bits are implementer
 				</Positions>
 			</Display>
 			<Measurement>
-				<Type options="tab=columns:3201|0-3210|9-3202|1-3203|2-3204|3-3205|4-3206|5-3207|6-3208|7-3209|8,width:0-150-100-100-100-100-100-100-100-100,sort:STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING,lines:25,filter:true">table</Type>
+				<Type options="tab=columns:3201|0-3210|9-3202|1-3203|2-3204|3-3205|4-3206|5-3207|6-3208|7-3209|8,width:0-150-100-100-100-100-125-100-115-100,sort:STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING,lines:25,filter:true">table</Type>
 			</Measurement>
 		</Param>
 		<Param id="3201" trending="false">
-			<Name>OpenflowSecondControllerConnectionsPolledPk</Name>
-			<Description>PK (Openflow Second Controller Connections Polled)</Description>
+			<Name>OpenflowSecondControllerConnectionsPolledPrimaryKey</Name>
+			<Description>Primary Key (Openflow Second Controller Connections Polled)</Description>
 			<Type>read</Type>
 			<Information>
 				<Subtext>This is the key used internally by DataMiner to identify the table entries.</Subtext>
@@ -2699,7 +2904,7 @@ The lower 48-bits are for a MAC address, while the upper 16-bits are implementer
 		</Param>
 		<Param id="3202" trending="false">
 			<Name>OpenflowSecondControllerConnectionsPolledAuxiliaryId</Name>
-			<Description>Auxiliary Id (Openflow Second Controller Connections Polled)</Description>
+			<Description>Auxiliary ID (Openflow Second Controller Connections Polled)</Description>
 			<Type>read</Type>
 			<Information>
 				<Subtext><![CDATA[Controller auxiliary ID. Must be 0 for the main controller.
@@ -2823,8 +3028,8 @@ The lower 48-bits are for a MAC address, while the upper 16-bits are implementer
 			</Measurement>
 		</Param>
 		<Param id="3206" trending="true">
-			<Name>OpenflowSecondControllerConnectionsPolledTransport</Name>
-			<Description>Transport (Openflow Second Controller Connections Polled)</Description>
+			<Name>OpenflowSecondControllerConnectionsPolledTransportProtocol</Name>
+			<Description>Transport Protocol (Openflow Second Controller Connections Polled)</Description>
 			<Type>read</Type>
 			<Information>
 				<Subtext><![CDATA[Controller transport protocol used:
@@ -3017,12 +3222,12 @@ The lower 48-bits are for a MAC address, while the upper 16-bits are implementer
 				</Positions>
 			</Display>
 			<Measurement>
-				<Type options="tab=columns:3301|0-3310|9-3302|1-3303|2-3304|3-3305|4-3306|5-3307|6-3308|7-3309|8,width:0-150-100-100-100-100-100-100-100-100,sort:STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING,lines:25,filter:true">table</Type>
+				<Type options="tab=columns:3301|0-3310|9-3302|1-3303|2-3304|3-3305|4-3306|5-3307|6-3308|7-3309|8,width:0-150-100-100-100-100-125-100-115-100,sort:STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING-STRING,lines:25,filter:true">table</Type>
 			</Measurement>
 		</Param>
 		<Param id="3301" trending="false">
-			<Name>OpenflowSecondControllerConnectionsSubscribedPk</Name>
-			<Description>PK (Openflow Second Controller Connections Subscribed)</Description>
+			<Name>OpenflowSecondControllerConnectionsSubscribedPrimaryKey</Name>
+			<Description>Primary Key (Openflow Second Controller Connections Subscribed)</Description>
 			<Type>read</Type>
 			<Information>
 				<Subtext>This is the key used internally by DataMiner to identify the table entries.</Subtext>
@@ -3041,7 +3246,7 @@ The lower 48-bits are for a MAC address, while the upper 16-bits are implementer
 		</Param>
 		<Param id="3302" trending="false">
 			<Name>OpenflowSecondControllerConnectionsSubscribedAuxiliaryId</Name>
-			<Description>Auxiliary Id (Openflow Second Controller Connections Subscribed)</Description>
+			<Description>Auxiliary ID (Openflow Second Controller Connections Subscribed)</Description>
 			<Type>read</Type>
 			<Information>
 				<Subtext><![CDATA[Controller auxiliary ID. Must be 0 for the main controller.
@@ -3165,8 +3370,8 @@ The lower 48-bits are for a MAC address, while the upper 16-bits are implementer
 			</Measurement>
 		</Param>
 		<Param id="3306" trending="true">
-			<Name>OpenflowSecondControllerConnectionsSubscribedTransport</Name>
-			<Description>Transport (Openflow Second Controller Connections Subscribed)</Description>
+			<Name>OpenflowSecondControllerConnectionsSubscribedTransportProtocol</Name>
+			<Description>Transport Protocol (Openflow Second Controller Connections Subscribed)</Description>
 			<Type>read</Type>
 			<Information>
 				<Subtext><![CDATA[Controller transport protocol used:

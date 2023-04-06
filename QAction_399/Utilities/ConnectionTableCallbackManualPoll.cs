@@ -3,7 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using QAction_399.Models;
-	using Skyline.DataMiner.Helper.OpenConfig.Enums;
+	using Skyline.DataMiner.DataSources.OpenConfig.Gnmi.Protocol.DataMapper.Args;
 	using Skyline.DataMiner.Scripting;
 
 	/// <summary>
@@ -11,15 +11,12 @@
 	/// </summary>
 	internal class ConnectionTableCallbackManualPoll : ConnectionTableCallback
 	{
-		private readonly SLProtocol _protocol;
-
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ConnectionTableCallbackManualPoll"/> class.
 		/// </summary>
 		/// <param name="protocol">Link with SLProtocol.</param>
 		public ConnectionTableCallbackManualPoll(SLProtocol protocol) : base(protocol)
 		{
-			_protocol = protocol;
 		}
 
 		/// <summary>
@@ -45,7 +42,7 @@
 				return;
 			}
 
-			QActionTable table = new QActionTable(_protocol, Parameter.Openflowsecondcontrollerconnectionspolled.tablePid, String.Empty);
+			QActionTable table = new QActionTable(Protocol, Parameter.Openflowsecondcontrollerconnectionspolled.tablePid, String.Empty);
 			table.FillArray(rows);
 		}
 
@@ -59,15 +56,15 @@
 		{
 			return new OpenflowsecondcontrollerconnectionspolledQActionRow
 			{
-				Openflowsecondcontrollerconnectionspolledpk = pk,
+				Openflowsecondcontrollerconnectionspolledprimarykey = pk,
 				Openflowsecondcontrollerconnectionspolledauxiliaryid = connectionState.AuxId,
 				Openflowsecondcontrollerconnectionspolledpriority = connectionState.Priority,
 				Openflowsecondcontrollerconnectionspolledipaddress = connectionState.Address,
 				Openflowsecondcontrollerconnectionspolledport = connectionState.Port,
-				Openflowsecondcontrollerconnectionspolledtransport = ConvertTransportType(DataValueOriginType.Poll, pk, connectionState.Transport, DateTime.UtcNow),
+				Openflowsecondcontrollerconnectionspolledtransportprotocol = ConvertTransportType(new DataMinerConnectorRawValueArgs { Value = connectionState.Transport }),
 				Openflowsecondcontrollerconnectionspolledcertificateid = connectionState.CertificateId == null ? "-1" : connectionState.CertificateId,
 				Openflowsecondcontrollerconnectionspolledsourceinterface = connectionState.SourceInterface,
-				Openflowsecondcontrollerconnectionspolledstate = ConvertBoolType(DataValueOriginType.Poll, pk, connectionState.Connected, DateTime.UtcNow),
+				Openflowsecondcontrollerconnectionspolledstate = ConvertBoolType(new DataMinerConnectorRawValueArgs { Value = connectionState.Connected }),
 				Openflowsecondcontrollerconnectionspolleddisplaykey = CreateKey(connectionState.AuxId, connectionState.Address, connectionState.Port),
 			};
 		}

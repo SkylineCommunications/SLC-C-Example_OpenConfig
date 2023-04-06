@@ -53,6 +53,31 @@ public static class Parameter
 	public const int gnmiversion_102 = 102;
 	/// <summary>PID: 102 | Type: read</summary>
 	public const int gnmiversion = 102;
+	/// <summary>PID: 103 | Type: read</summary>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public const int asciiencoding_103 = 103;
+	/// <summary>PID: 103 | Type: read</summary>
+	public const int asciiencoding = 103;
+	/// <summary>PID: 104 | Type: read</summary>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public const int bytesencoding_104 = 104;
+	/// <summary>PID: 104 | Type: read</summary>
+	public const int bytesencoding = 104;
+	/// <summary>PID: 105 | Type: read</summary>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public const int jsonencoding_105 = 105;
+	/// <summary>PID: 105 | Type: read</summary>
+	public const int jsonencoding = 105;
+	/// <summary>PID: 106 | Type: read</summary>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public const int jsonietfencoding_106 = 106;
+	/// <summary>PID: 106 | Type: read</summary>
+	public const int jsonietfencoding = 106;
+	/// <summary>PID: 107 | Type: read</summary>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public const int protoencoding_107 = 107;
+	/// <summary>PID: 107 | Type: read</summary>
+	public const int protoencoding = 107;
 	/// <summary>PID: 406 | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public const int systemstatecurrentdatetime_406 = 406;
@@ -90,9 +115,9 @@ public static class Parameter
 	public const int openflowmaxbackoff = 3003;
 	/// <summary>PID: 3004 | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
-	public const int openflowinactivityprobe_3004 = 3004;
+	public const int openflowinactivityprobeperiod_3004 = 3004;
 	/// <summary>PID: 3004 | Type: read</summary>
-	public const int openflowinactivityprobe = 3004;
+	public const int openflowinactivityprobeperiod = 3004;
 	public class Write
 	{
 		/// <summary>PID: 11 | Type: write</summary>
@@ -559,9 +584,9 @@ public static class Parameter
 		{
 			/// <summary>PID: 3101 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
-			public const int openflowmaincontrollerconnectionspk_3101 = 3101;
+			public const int openflowmaincontrollerconnectionsprimarykey_3101 = 3101;
 			/// <summary>PID: 3101 | Type: read</summary>
-			public const int openflowmaincontrollerconnectionspk = 3101;
+			public const int openflowmaincontrollerconnectionsprimarykey = 3101;
 			/// <summary>PID: 3102 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
 			public const int openflowmaincontrollerconnectionsauxiliaryid_3102 = 3102;
@@ -584,9 +609,9 @@ public static class Parameter
 			public const int openflowmaincontrollerconnectionsport = 3105;
 			/// <summary>PID: 3106 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
-			public const int openflowmaincontrollerconnectionstransport_3106 = 3106;
+			public const int openflowmaincontrollerconnectionstransportprotocol_3106 = 3106;
 			/// <summary>PID: 3106 | Type: read</summary>
-			public const int openflowmaincontrollerconnectionstransport = 3106;
+			public const int openflowmaincontrollerconnectionstransportprotocol = 3106;
 			/// <summary>PID: 3107 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
 			public const int openflowmaincontrollerconnectionscertificateid_3107 = 3107;
@@ -615,9 +640,9 @@ public static class Parameter
 		{
 			/// <summary>IDX: 0 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
-			public const int openflowmaincontrollerconnectionspk_3101 = 0;
+			public const int openflowmaincontrollerconnectionsprimarykey_3101 = 0;
 			/// <summary>IDX: 0 | Type: read</summary>
-			public const int openflowmaincontrollerconnectionspk = 0;
+			public const int openflowmaincontrollerconnectionsprimarykey = 0;
 			/// <summary>IDX: 1 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
 			public const int openflowmaincontrollerconnectionsauxiliaryid_3102 = 1;
@@ -640,9 +665,9 @@ public static class Parameter
 			public const int openflowmaincontrollerconnectionsport = 4;
 			/// <summary>IDX: 5 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
-			public const int openflowmaincontrollerconnectionstransport_3106 = 5;
+			public const int openflowmaincontrollerconnectionstransportprotocol_3106 = 5;
 			/// <summary>IDX: 5 | Type: read</summary>
-			public const int openflowmaincontrollerconnectionstransport = 5;
+			public const int openflowmaincontrollerconnectionstransportprotocol = 5;
 			/// <summary>IDX: 6 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
 			public const int openflowmaincontrollerconnectionscertificateid_3107 = 6;
@@ -677,9 +702,9 @@ public static class Parameter
 		{
 			/// <summary>PID: 3201 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
-			public const int openflowsecondcontrollerconnectionspolledpk_3201 = 3201;
+			public const int openflowsecondcontrollerconnectionspolledprimarykey_3201 = 3201;
 			/// <summary>PID: 3201 | Type: read</summary>
-			public const int openflowsecondcontrollerconnectionspolledpk = 3201;
+			public const int openflowsecondcontrollerconnectionspolledprimarykey = 3201;
 			/// <summary>PID: 3202 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
 			public const int openflowsecondcontrollerconnectionspolledauxiliaryid_3202 = 3202;
@@ -702,9 +727,9 @@ public static class Parameter
 			public const int openflowsecondcontrollerconnectionspolledport = 3205;
 			/// <summary>PID: 3206 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
-			public const int openflowsecondcontrollerconnectionspolledtransport_3206 = 3206;
+			public const int openflowsecondcontrollerconnectionspolledtransportprotocol_3206 = 3206;
 			/// <summary>PID: 3206 | Type: read</summary>
-			public const int openflowsecondcontrollerconnectionspolledtransport = 3206;
+			public const int openflowsecondcontrollerconnectionspolledtransportprotocol = 3206;
 			/// <summary>PID: 3207 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
 			public const int openflowsecondcontrollerconnectionspolledcertificateid_3207 = 3207;
@@ -733,9 +758,9 @@ public static class Parameter
 		{
 			/// <summary>IDX: 0 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
-			public const int openflowsecondcontrollerconnectionspolledpk_3201 = 0;
+			public const int openflowsecondcontrollerconnectionspolledprimarykey_3201 = 0;
 			/// <summary>IDX: 0 | Type: read</summary>
-			public const int openflowsecondcontrollerconnectionspolledpk = 0;
+			public const int openflowsecondcontrollerconnectionspolledprimarykey = 0;
 			/// <summary>IDX: 1 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
 			public const int openflowsecondcontrollerconnectionspolledauxiliaryid_3202 = 1;
@@ -758,9 +783,9 @@ public static class Parameter
 			public const int openflowsecondcontrollerconnectionspolledport = 4;
 			/// <summary>IDX: 5 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
-			public const int openflowsecondcontrollerconnectionspolledtransport_3206 = 5;
+			public const int openflowsecondcontrollerconnectionspolledtransportprotocol_3206 = 5;
 			/// <summary>IDX: 5 | Type: read</summary>
-			public const int openflowsecondcontrollerconnectionspolledtransport = 5;
+			public const int openflowsecondcontrollerconnectionspolledtransportprotocol = 5;
 			/// <summary>IDX: 6 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
 			public const int openflowsecondcontrollerconnectionspolledcertificateid_3207 = 6;
@@ -795,9 +820,9 @@ public static class Parameter
 		{
 			/// <summary>PID: 3301 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
-			public const int openflowsecondcontrollerconnectionssubscribedpk_3301 = 3301;
+			public const int openflowsecondcontrollerconnectionssubscribedprimarykey_3301 = 3301;
 			/// <summary>PID: 3301 | Type: read</summary>
-			public const int openflowsecondcontrollerconnectionssubscribedpk = 3301;
+			public const int openflowsecondcontrollerconnectionssubscribedprimarykey = 3301;
 			/// <summary>PID: 3302 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
 			public const int openflowsecondcontrollerconnectionssubscribedauxiliaryid_3302 = 3302;
@@ -820,9 +845,9 @@ public static class Parameter
 			public const int openflowsecondcontrollerconnectionssubscribedport = 3305;
 			/// <summary>PID: 3306 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
-			public const int openflowsecondcontrollerconnectionssubscribedtransport_3306 = 3306;
+			public const int openflowsecondcontrollerconnectionssubscribedtransportprotocol_3306 = 3306;
 			/// <summary>PID: 3306 | Type: read</summary>
-			public const int openflowsecondcontrollerconnectionssubscribedtransport = 3306;
+			public const int openflowsecondcontrollerconnectionssubscribedtransportprotocol = 3306;
 			/// <summary>PID: 3307 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
 			public const int openflowsecondcontrollerconnectionssubscribedcertificateid_3307 = 3307;
@@ -851,9 +876,9 @@ public static class Parameter
 		{
 			/// <summary>IDX: 0 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
-			public const int openflowsecondcontrollerconnectionssubscribedpk_3301 = 0;
+			public const int openflowsecondcontrollerconnectionssubscribedprimarykey_3301 = 0;
 			/// <summary>IDX: 0 | Type: read</summary>
-			public const int openflowsecondcontrollerconnectionssubscribedpk = 0;
+			public const int openflowsecondcontrollerconnectionssubscribedprimarykey = 0;
 			/// <summary>IDX: 1 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
 			public const int openflowsecondcontrollerconnectionssubscribedauxiliaryid_3302 = 1;
@@ -876,9 +901,9 @@ public static class Parameter
 			public const int openflowsecondcontrollerconnectionssubscribedport = 4;
 			/// <summary>IDX: 5 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
-			public const int openflowsecondcontrollerconnectionssubscribedtransport_3306 = 5;
+			public const int openflowsecondcontrollerconnectionssubscribedtransportprotocol_3306 = 5;
 			/// <summary>IDX: 5 | Type: read</summary>
-			public const int openflowsecondcontrollerconnectionssubscribedtransport = 5;
+			public const int openflowsecondcontrollerconnectionssubscribedtransportprotocol = 5;
 			/// <summary>IDX: 6 | Type: read</summary>
 			[EditorBrowsable(EditorBrowsableState.Never)]
 			public const int openflowsecondcontrollerconnectionssubscribedcertificateid_3307 = 6;
@@ -959,6 +984,16 @@ public interface SLProtocolExt : SLProtocol
 	object Grpcconnectionstate { get; set; }
 	object Gnmiversion_102 { get; set; }
 	object Gnmiversion { get; set; }
+	object Asciiencoding_103 { get; set; }
+	object Asciiencoding { get; set; }
+	object Bytesencoding_104 { get; set; }
+	object Bytesencoding { get; set; }
+	object Jsonencoding_105 { get; set; }
+	object Jsonencoding { get; set; }
+	object Jsonietfencoding_106 { get; set; }
+	object Jsonietfencoding { get; set; }
+	object Protoencoding_107 { get; set; }
+	object Protoencoding { get; set; }
 	object Systemstatecurrentdatetime_406 { get; set; }
 	object Systemstatecurrentdatetime { get; set; }
 	object Systemstateloginbanner_408 { get; set; }
@@ -1051,10 +1086,10 @@ public interface SLProtocolExt : SLProtocol
 	object Openflowbackoffinterval { get; set; }
 	object Openflowmaxbackoff_3003 { get; set; }
 	object Openflowmaxbackoff { get; set; }
-	object Openflowinactivityprobe_3004 { get; set; }
-	object Openflowinactivityprobe { get; set; }
-	object Openflowmaincontrollerconnectionspk_3101 { get; set; }
-	object Openflowmaincontrollerconnectionspk { get; set; }
+	object Openflowinactivityprobeperiod_3004 { get; set; }
+	object Openflowinactivityprobeperiod { get; set; }
+	object Openflowmaincontrollerconnectionsprimarykey_3101 { get; set; }
+	object Openflowmaincontrollerconnectionsprimarykey { get; set; }
 	object Openflowmaincontrollerconnectionsauxiliaryid_3102 { get; set; }
 	object Openflowmaincontrollerconnectionsauxiliaryid { get; set; }
 	object Openflowmaincontrollerconnectionspriority_3103 { get; set; }
@@ -1063,8 +1098,8 @@ public interface SLProtocolExt : SLProtocol
 	object Openflowmaincontrollerconnectionsipaddress { get; set; }
 	object Openflowmaincontrollerconnectionsport_3105 { get; set; }
 	object Openflowmaincontrollerconnectionsport { get; set; }
-	object Openflowmaincontrollerconnectionstransport_3106 { get; set; }
-	object Openflowmaincontrollerconnectionstransport { get; set; }
+	object Openflowmaincontrollerconnectionstransportprotocol_3106 { get; set; }
+	object Openflowmaincontrollerconnectionstransportprotocol { get; set; }
 	object Openflowmaincontrollerconnectionscertificateid_3107 { get; set; }
 	object Openflowmaincontrollerconnectionscertificateid { get; set; }
 	object Openflowmaincontrollerconnectionssourceinterface_3108 { get; set; }
@@ -1073,8 +1108,8 @@ public interface SLProtocolExt : SLProtocol
 	object Openflowmaincontrollerconnectionsstate { get; set; }
 	object Openflowmaincontrollerconnectionsdisplaykey_3110 { get; set; }
 	object Openflowmaincontrollerconnectionsdisplaykey { get; set; }
-	object Openflowsecondcontrollerconnectionspolledpk_3201 { get; set; }
-	object Openflowsecondcontrollerconnectionspolledpk { get; set; }
+	object Openflowsecondcontrollerconnectionspolledprimarykey_3201 { get; set; }
+	object Openflowsecondcontrollerconnectionspolledprimarykey { get; set; }
 	object Openflowsecondcontrollerconnectionspolledauxiliaryid_3202 { get; set; }
 	object Openflowsecondcontrollerconnectionspolledauxiliaryid { get; set; }
 	object Openflowsecondcontrollerconnectionspolledpriority_3203 { get; set; }
@@ -1083,8 +1118,8 @@ public interface SLProtocolExt : SLProtocol
 	object Openflowsecondcontrollerconnectionspolledipaddress { get; set; }
 	object Openflowsecondcontrollerconnectionspolledport_3205 { get; set; }
 	object Openflowsecondcontrollerconnectionspolledport { get; set; }
-	object Openflowsecondcontrollerconnectionspolledtransport_3206 { get; set; }
-	object Openflowsecondcontrollerconnectionspolledtransport { get; set; }
+	object Openflowsecondcontrollerconnectionspolledtransportprotocol_3206 { get; set; }
+	object Openflowsecondcontrollerconnectionspolledtransportprotocol { get; set; }
 	object Openflowsecondcontrollerconnectionspolledcertificateid_3207 { get; set; }
 	object Openflowsecondcontrollerconnectionspolledcertificateid { get; set; }
 	object Openflowsecondcontrollerconnectionspolledsourceinterface_3208 { get; set; }
@@ -1093,8 +1128,8 @@ public interface SLProtocolExt : SLProtocol
 	object Openflowsecondcontrollerconnectionspolledstate { get; set; }
 	object Openflowsecondcontrollerconnectionspolleddisplaykey_3210 { get; set; }
 	object Openflowsecondcontrollerconnectionspolleddisplaykey { get; set; }
-	object Openflowsecondcontrollerconnectionssubscribedpk_3301 { get; set; }
-	object Openflowsecondcontrollerconnectionssubscribedpk { get; set; }
+	object Openflowsecondcontrollerconnectionssubscribedprimarykey_3301 { get; set; }
+	object Openflowsecondcontrollerconnectionssubscribedprimarykey { get; set; }
 	object Openflowsecondcontrollerconnectionssubscribedauxiliaryid_3302 { get; set; }
 	object Openflowsecondcontrollerconnectionssubscribedauxiliaryid { get; set; }
 	object Openflowsecondcontrollerconnectionssubscribedpriority_3303 { get; set; }
@@ -1103,8 +1138,8 @@ public interface SLProtocolExt : SLProtocol
 	object Openflowsecondcontrollerconnectionssubscribedipaddress { get; set; }
 	object Openflowsecondcontrollerconnectionssubscribedport_3305 { get; set; }
 	object Openflowsecondcontrollerconnectionssubscribedport { get; set; }
-	object Openflowsecondcontrollerconnectionssubscribedtransport_3306 { get; set; }
-	object Openflowsecondcontrollerconnectionssubscribedtransport { get; set; }
+	object Openflowsecondcontrollerconnectionssubscribedtransportprotocol_3306 { get; set; }
+	object Openflowsecondcontrollerconnectionssubscribedtransportprotocol { get; set; }
 	object Openflowsecondcontrollerconnectionssubscribedcertificateid_3307 { get; set; }
 	object Openflowsecondcontrollerconnectionssubscribedcertificateid { get; set; }
 	object Openflowsecondcontrollerconnectionssubscribedsourceinterface_3308 { get; set; }
@@ -1187,6 +1222,31 @@ public class ConcreteSLProtocolExt : ConcreteSLProtocol, SLProtocolExt
 	public System.Object Gnmiversion_102 {get { return GetParameter(102); }set { SetParameter(102, value); }}
 	/// <summary>PID: 102  | Type: read</summary>
 	public System.Object Gnmiversion {get { return GetParameter(102); }set { SetParameter(102, value); }}
+	/// <summary>PID: 103  | Type: read | DISCREETS: Not Supported = 0, Supported = 1</summary>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public System.Object Asciiencoding_103 {get { return GetParameter(103); }set { SetParameter(103, value); }}
+	/// <summary>PID: 103  | Type: read | DISCREETS: Not Supported = 0, Supported = 1</summary>
+	public System.Object Asciiencoding {get { return GetParameter(103); }set { SetParameter(103, value); }}
+	/// <summary>PID: 104  | Type: read | DISCREETS: Not Supported = 0, Supported = 1</summary>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public System.Object Bytesencoding_104 {get { return GetParameter(104); }set { SetParameter(104, value); }}
+	/// <summary>PID: 104  | Type: read | DISCREETS: Not Supported = 0, Supported = 1</summary>
+	public System.Object Bytesencoding {get { return GetParameter(104); }set { SetParameter(104, value); }}
+	/// <summary>PID: 105  | Type: read | DISCREETS: Not Supported = 0, Supported = 1</summary>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public System.Object Jsonencoding_105 {get { return GetParameter(105); }set { SetParameter(105, value); }}
+	/// <summary>PID: 105  | Type: read | DISCREETS: Not Supported = 0, Supported = 1</summary>
+	public System.Object Jsonencoding {get { return GetParameter(105); }set { SetParameter(105, value); }}
+	/// <summary>PID: 106  | Type: read | DISCREETS: Not Supported = 0, Supported = 1</summary>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public System.Object Jsonietfencoding_106 {get { return GetParameter(106); }set { SetParameter(106, value); }}
+	/// <summary>PID: 106  | Type: read | DISCREETS: Not Supported = 0, Supported = 1</summary>
+	public System.Object Jsonietfencoding {get { return GetParameter(106); }set { SetParameter(106, value); }}
+	/// <summary>PID: 107  | Type: read | DISCREETS: Not Supported = 0, Supported = 1</summary>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public System.Object Protoencoding_107 {get { return GetParameter(107); }set { SetParameter(107, value); }}
+	/// <summary>PID: 107  | Type: read | DISCREETS: Not Supported = 0, Supported = 1</summary>
+	public System.Object Protoencoding {get { return GetParameter(107); }set { SetParameter(107, value); }}
 	/// <summary>PID: 406  | Type: read | EXCEPTIONS: N/A = 0</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public System.Object Systemstatecurrentdatetime_406 {get { return GetParameter(406); }set { SetParameter(406, value); }}
@@ -1420,14 +1480,14 @@ public class ConcreteSLProtocolExt : ConcreteSLProtocol, SLProtocolExt
 	public System.Object Openflowmaxbackoff {get { return GetParameter(3003); }set { SetParameter(3003, value); }}
 	/// <summary>PID: 3004  | Type: read | EXCEPTIONS: N/A = -1</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
-	public System.Object Openflowinactivityprobe_3004 {get { return GetParameter(3004); }set { SetParameter(3004, value); }}
+	public System.Object Openflowinactivityprobeperiod_3004 {get { return GetParameter(3004); }set { SetParameter(3004, value); }}
 	/// <summary>PID: 3004  | Type: read | EXCEPTIONS: N/A = -1</summary>
-	public System.Object Openflowinactivityprobe {get { return GetParameter(3004); }set { SetParameter(3004, value); }}
+	public System.Object Openflowinactivityprobeperiod {get { return GetParameter(3004); }set { SetParameter(3004, value); }}
 	/// <summary>PID: 3101  | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
-	public System.Object Openflowmaincontrollerconnectionspk_3101 {get { return GetParameter(3101); }set { SetParameter(3101, value); }}
+	public System.Object Openflowmaincontrollerconnectionsprimarykey_3101 {get { return GetParameter(3101); }set { SetParameter(3101, value); }}
 	/// <summary>PID: 3101  | Type: read</summary>
-	public System.Object Openflowmaincontrollerconnectionspk {get { return GetParameter(3101); }set { SetParameter(3101, value); }}
+	public System.Object Openflowmaincontrollerconnectionsprimarykey {get { return GetParameter(3101); }set { SetParameter(3101, value); }}
 	/// <summary>PID: 3102  | Type: read | EXCEPTIONS: N/A = -1</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public System.Object Openflowmaincontrollerconnectionsauxiliaryid_3102 {get { return GetParameter(3102); }set { SetParameter(3102, value); }}
@@ -1450,9 +1510,9 @@ public class ConcreteSLProtocolExt : ConcreteSLProtocol, SLProtocolExt
 	public System.Object Openflowmaincontrollerconnectionsport {get { return GetParameter(3105); }set { SetParameter(3105, value); }}
 	/// <summary>PID: 3106  | Type: read | DISCREETS: TCP = 1, TLS = 2 | EXCEPTIONS: N/A = -1, Unresolvable = -2</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
-	public System.Object Openflowmaincontrollerconnectionstransport_3106 {get { return GetParameter(3106); }set { SetParameter(3106, value); }}
+	public System.Object Openflowmaincontrollerconnectionstransportprotocol_3106 {get { return GetParameter(3106); }set { SetParameter(3106, value); }}
 	/// <summary>PID: 3106  | Type: read | DISCREETS: TCP = 1, TLS = 2 | EXCEPTIONS: N/A = -1, Unresolvable = -2</summary>
-	public System.Object Openflowmaincontrollerconnectionstransport {get { return GetParameter(3106); }set { SetParameter(3106, value); }}
+	public System.Object Openflowmaincontrollerconnectionstransportprotocol {get { return GetParameter(3106); }set { SetParameter(3106, value); }}
 	/// <summary>PID: 3107  | Type: read | EXCEPTIONS: N/A = -1</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public System.Object Openflowmaincontrollerconnectionscertificateid_3107 {get { return GetParameter(3107); }set { SetParameter(3107, value); }}
@@ -1475,9 +1535,9 @@ public class ConcreteSLProtocolExt : ConcreteSLProtocol, SLProtocolExt
 	public System.Object Openflowmaincontrollerconnectionsdisplaykey {get { return GetParameter(3110); }set { SetParameter(3110, value); }}
 	/// <summary>PID: 3201  | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
-	public System.Object Openflowsecondcontrollerconnectionspolledpk_3201 {get { return GetParameter(3201); }set { SetParameter(3201, value); }}
+	public System.Object Openflowsecondcontrollerconnectionspolledprimarykey_3201 {get { return GetParameter(3201); }set { SetParameter(3201, value); }}
 	/// <summary>PID: 3201  | Type: read</summary>
-	public System.Object Openflowsecondcontrollerconnectionspolledpk {get { return GetParameter(3201); }set { SetParameter(3201, value); }}
+	public System.Object Openflowsecondcontrollerconnectionspolledprimarykey {get { return GetParameter(3201); }set { SetParameter(3201, value); }}
 	/// <summary>PID: 3202  | Type: read | EXCEPTIONS: N/A = -1</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public System.Object Openflowsecondcontrollerconnectionspolledauxiliaryid_3202 {get { return GetParameter(3202); }set { SetParameter(3202, value); }}
@@ -1500,9 +1560,9 @@ public class ConcreteSLProtocolExt : ConcreteSLProtocol, SLProtocolExt
 	public System.Object Openflowsecondcontrollerconnectionspolledport {get { return GetParameter(3205); }set { SetParameter(3205, value); }}
 	/// <summary>PID: 3206  | Type: read | DISCREETS: TCP = 1, TLS = 2 | EXCEPTIONS: N/A = -1, Unresolvable = -2</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
-	public System.Object Openflowsecondcontrollerconnectionspolledtransport_3206 {get { return GetParameter(3206); }set { SetParameter(3206, value); }}
+	public System.Object Openflowsecondcontrollerconnectionspolledtransportprotocol_3206 {get { return GetParameter(3206); }set { SetParameter(3206, value); }}
 	/// <summary>PID: 3206  | Type: read | DISCREETS: TCP = 1, TLS = 2 | EXCEPTIONS: N/A = -1, Unresolvable = -2</summary>
-	public System.Object Openflowsecondcontrollerconnectionspolledtransport {get { return GetParameter(3206); }set { SetParameter(3206, value); }}
+	public System.Object Openflowsecondcontrollerconnectionspolledtransportprotocol {get { return GetParameter(3206); }set { SetParameter(3206, value); }}
 	/// <summary>PID: 3207  | Type: read | EXCEPTIONS: N/A = -1</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public System.Object Openflowsecondcontrollerconnectionspolledcertificateid_3207 {get { return GetParameter(3207); }set { SetParameter(3207, value); }}
@@ -1525,9 +1585,9 @@ public class ConcreteSLProtocolExt : ConcreteSLProtocol, SLProtocolExt
 	public System.Object Openflowsecondcontrollerconnectionspolleddisplaykey {get { return GetParameter(3210); }set { SetParameter(3210, value); }}
 	/// <summary>PID: 3301  | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
-	public System.Object Openflowsecondcontrollerconnectionssubscribedpk_3301 {get { return GetParameter(3301); }set { SetParameter(3301, value); }}
+	public System.Object Openflowsecondcontrollerconnectionssubscribedprimarykey_3301 {get { return GetParameter(3301); }set { SetParameter(3301, value); }}
 	/// <summary>PID: 3301  | Type: read</summary>
-	public System.Object Openflowsecondcontrollerconnectionssubscribedpk {get { return GetParameter(3301); }set { SetParameter(3301, value); }}
+	public System.Object Openflowsecondcontrollerconnectionssubscribedprimarykey {get { return GetParameter(3301); }set { SetParameter(3301, value); }}
 	/// <summary>PID: 3302  | Type: read | EXCEPTIONS: N/A = -1</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public System.Object Openflowsecondcontrollerconnectionssubscribedauxiliaryid_3302 {get { return GetParameter(3302); }set { SetParameter(3302, value); }}
@@ -1550,9 +1610,9 @@ public class ConcreteSLProtocolExt : ConcreteSLProtocol, SLProtocolExt
 	public System.Object Openflowsecondcontrollerconnectionssubscribedport {get { return GetParameter(3305); }set { SetParameter(3305, value); }}
 	/// <summary>PID: 3306  | Type: read | DISCREETS: TCP = 1, TLS = 2 | EXCEPTIONS: N/A = -1, Unresolvable = -2</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
-	public System.Object Openflowsecondcontrollerconnectionssubscribedtransport_3306 {get { return GetParameter(3306); }set { SetParameter(3306, value); }}
+	public System.Object Openflowsecondcontrollerconnectionssubscribedtransportprotocol_3306 {get { return GetParameter(3306); }set { SetParameter(3306, value); }}
 	/// <summary>PID: 3306  | Type: read | DISCREETS: TCP = 1, TLS = 2 | EXCEPTIONS: N/A = -1, Unresolvable = -2</summary>
-	public System.Object Openflowsecondcontrollerconnectionssubscribedtransport {get { return GetParameter(3306); }set { SetParameter(3306, value); }}
+	public System.Object Openflowsecondcontrollerconnectionssubscribedtransportprotocol {get { return GetParameter(3306); }set { SetParameter(3306, value); }}
 	/// <summary>PID: 3307  | Type: read | EXCEPTIONS: N/A = -1</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public System.Object Openflowsecondcontrollerconnectionssubscribedcertificateid_3307 {get { return GetParameter(3307); }set { SetParameter(3307, value); }}
@@ -1830,9 +1890,9 @@ public class OpenflowmaincontrollerconnectionsQActionRow : QActionTableRow
 {
 	/// <summary>PID: 3101 | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
-	public System.Object Openflowmaincontrollerconnectionspk_3101 { get { if (base.Columns.ContainsKey(0)) { return base.Columns[0]; } else { return null; } } set { if (base.Columns.ContainsKey(0)) { base.Columns[0] = value; } else { base.Columns.Add(0, value); } } }
+	public System.Object Openflowmaincontrollerconnectionsprimarykey_3101 { get { if (base.Columns.ContainsKey(0)) { return base.Columns[0]; } else { return null; } } set { if (base.Columns.ContainsKey(0)) { base.Columns[0] = value; } else { base.Columns.Add(0, value); } } }
 	/// <summary>PID: 3101 | Type: read</summary>
-	public System.Object Openflowmaincontrollerconnectionspk { get { if (base.Columns.ContainsKey(0)) { return base.Columns[0]; } else { return null; } } set { if (base.Columns.ContainsKey(0)) { base.Columns[0] = value; } else { base.Columns.Add(0, value); } } }
+	public System.Object Openflowmaincontrollerconnectionsprimarykey { get { if (base.Columns.ContainsKey(0)) { return base.Columns[0]; } else { return null; } } set { if (base.Columns.ContainsKey(0)) { base.Columns[0] = value; } else { base.Columns.Add(0, value); } } }
 	/// <summary>PID: 3102 | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public System.Object Openflowmaincontrollerconnectionsauxiliaryid_3102 { get { if (base.Columns.ContainsKey(1)) { return base.Columns[1]; } else { return null; } } set { if (base.Columns.ContainsKey(1)) { base.Columns[1] = value; } else { base.Columns.Add(1, value); } } }
@@ -1855,9 +1915,9 @@ public class OpenflowmaincontrollerconnectionsQActionRow : QActionTableRow
 	public System.Object Openflowmaincontrollerconnectionsport { get { if (base.Columns.ContainsKey(4)) { return base.Columns[4]; } else { return null; } } set { if (base.Columns.ContainsKey(4)) { base.Columns[4] = value; } else { base.Columns.Add(4, value); } } }
 	/// <summary>PID: 3106 | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
-	public System.Object Openflowmaincontrollerconnectionstransport_3106 { get { if (base.Columns.ContainsKey(5)) { return base.Columns[5]; } else { return null; } } set { if (base.Columns.ContainsKey(5)) { base.Columns[5] = value; } else { base.Columns.Add(5, value); } } }
+	public System.Object Openflowmaincontrollerconnectionstransportprotocol_3106 { get { if (base.Columns.ContainsKey(5)) { return base.Columns[5]; } else { return null; } } set { if (base.Columns.ContainsKey(5)) { base.Columns[5] = value; } else { base.Columns.Add(5, value); } } }
 	/// <summary>PID: 3106 | Type: read</summary>
-	public System.Object Openflowmaincontrollerconnectionstransport { get { if (base.Columns.ContainsKey(5)) { return base.Columns[5]; } else { return null; } } set { if (base.Columns.ContainsKey(5)) { base.Columns[5] = value; } else { base.Columns.Add(5, value); } } }
+	public System.Object Openflowmaincontrollerconnectionstransportprotocol { get { if (base.Columns.ContainsKey(5)) { return base.Columns[5]; } else { return null; } } set { if (base.Columns.ContainsKey(5)) { base.Columns[5] = value; } else { base.Columns.Add(5, value); } } }
 	/// <summary>PID: 3107 | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public System.Object Openflowmaincontrollerconnectionscertificateid_3107 { get { if (base.Columns.ContainsKey(6)) { return base.Columns[6]; } else { return null; } } set { if (base.Columns.ContainsKey(6)) { base.Columns[6] = value; } else { base.Columns.Add(6, value); } } }
@@ -1888,9 +1948,9 @@ public class OpenflowsecondcontrollerconnectionspolledQActionRow : QActionTableR
 {
 	/// <summary>PID: 3201 | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
-	public System.Object Openflowsecondcontrollerconnectionspolledpk_3201 { get { if (base.Columns.ContainsKey(0)) { return base.Columns[0]; } else { return null; } } set { if (base.Columns.ContainsKey(0)) { base.Columns[0] = value; } else { base.Columns.Add(0, value); } } }
+	public System.Object Openflowsecondcontrollerconnectionspolledprimarykey_3201 { get { if (base.Columns.ContainsKey(0)) { return base.Columns[0]; } else { return null; } } set { if (base.Columns.ContainsKey(0)) { base.Columns[0] = value; } else { base.Columns.Add(0, value); } } }
 	/// <summary>PID: 3201 | Type: read</summary>
-	public System.Object Openflowsecondcontrollerconnectionspolledpk { get { if (base.Columns.ContainsKey(0)) { return base.Columns[0]; } else { return null; } } set { if (base.Columns.ContainsKey(0)) { base.Columns[0] = value; } else { base.Columns.Add(0, value); } } }
+	public System.Object Openflowsecondcontrollerconnectionspolledprimarykey { get { if (base.Columns.ContainsKey(0)) { return base.Columns[0]; } else { return null; } } set { if (base.Columns.ContainsKey(0)) { base.Columns[0] = value; } else { base.Columns.Add(0, value); } } }
 	/// <summary>PID: 3202 | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public System.Object Openflowsecondcontrollerconnectionspolledauxiliaryid_3202 { get { if (base.Columns.ContainsKey(1)) { return base.Columns[1]; } else { return null; } } set { if (base.Columns.ContainsKey(1)) { base.Columns[1] = value; } else { base.Columns.Add(1, value); } } }
@@ -1913,9 +1973,9 @@ public class OpenflowsecondcontrollerconnectionspolledQActionRow : QActionTableR
 	public System.Object Openflowsecondcontrollerconnectionspolledport { get { if (base.Columns.ContainsKey(4)) { return base.Columns[4]; } else { return null; } } set { if (base.Columns.ContainsKey(4)) { base.Columns[4] = value; } else { base.Columns.Add(4, value); } } }
 	/// <summary>PID: 3206 | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
-	public System.Object Openflowsecondcontrollerconnectionspolledtransport_3206 { get { if (base.Columns.ContainsKey(5)) { return base.Columns[5]; } else { return null; } } set { if (base.Columns.ContainsKey(5)) { base.Columns[5] = value; } else { base.Columns.Add(5, value); } } }
+	public System.Object Openflowsecondcontrollerconnectionspolledtransportprotocol_3206 { get { if (base.Columns.ContainsKey(5)) { return base.Columns[5]; } else { return null; } } set { if (base.Columns.ContainsKey(5)) { base.Columns[5] = value; } else { base.Columns.Add(5, value); } } }
 	/// <summary>PID: 3206 | Type: read</summary>
-	public System.Object Openflowsecondcontrollerconnectionspolledtransport { get { if (base.Columns.ContainsKey(5)) { return base.Columns[5]; } else { return null; } } set { if (base.Columns.ContainsKey(5)) { base.Columns[5] = value; } else { base.Columns.Add(5, value); } } }
+	public System.Object Openflowsecondcontrollerconnectionspolledtransportprotocol { get { if (base.Columns.ContainsKey(5)) { return base.Columns[5]; } else { return null; } } set { if (base.Columns.ContainsKey(5)) { base.Columns[5] = value; } else { base.Columns.Add(5, value); } } }
 	/// <summary>PID: 3207 | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public System.Object Openflowsecondcontrollerconnectionspolledcertificateid_3207 { get { if (base.Columns.ContainsKey(6)) { return base.Columns[6]; } else { return null; } } set { if (base.Columns.ContainsKey(6)) { base.Columns[6] = value; } else { base.Columns.Add(6, value); } } }
@@ -1946,9 +2006,9 @@ public class OpenflowsecondcontrollerconnectionssubscribedQActionRow : QActionTa
 {
 	/// <summary>PID: 3301 | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
-	public System.Object Openflowsecondcontrollerconnectionssubscribedpk_3301 { get { if (base.Columns.ContainsKey(0)) { return base.Columns[0]; } else { return null; } } set { if (base.Columns.ContainsKey(0)) { base.Columns[0] = value; } else { base.Columns.Add(0, value); } } }
+	public System.Object Openflowsecondcontrollerconnectionssubscribedprimarykey_3301 { get { if (base.Columns.ContainsKey(0)) { return base.Columns[0]; } else { return null; } } set { if (base.Columns.ContainsKey(0)) { base.Columns[0] = value; } else { base.Columns.Add(0, value); } } }
 	/// <summary>PID: 3301 | Type: read</summary>
-	public System.Object Openflowsecondcontrollerconnectionssubscribedpk { get { if (base.Columns.ContainsKey(0)) { return base.Columns[0]; } else { return null; } } set { if (base.Columns.ContainsKey(0)) { base.Columns[0] = value; } else { base.Columns.Add(0, value); } } }
+	public System.Object Openflowsecondcontrollerconnectionssubscribedprimarykey { get { if (base.Columns.ContainsKey(0)) { return base.Columns[0]; } else { return null; } } set { if (base.Columns.ContainsKey(0)) { base.Columns[0] = value; } else { base.Columns.Add(0, value); } } }
 	/// <summary>PID: 3302 | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public System.Object Openflowsecondcontrollerconnectionssubscribedauxiliaryid_3302 { get { if (base.Columns.ContainsKey(1)) { return base.Columns[1]; } else { return null; } } set { if (base.Columns.ContainsKey(1)) { base.Columns[1] = value; } else { base.Columns.Add(1, value); } } }
@@ -1971,9 +2031,9 @@ public class OpenflowsecondcontrollerconnectionssubscribedQActionRow : QActionTa
 	public System.Object Openflowsecondcontrollerconnectionssubscribedport { get { if (base.Columns.ContainsKey(4)) { return base.Columns[4]; } else { return null; } } set { if (base.Columns.ContainsKey(4)) { base.Columns[4] = value; } else { base.Columns.Add(4, value); } } }
 	/// <summary>PID: 3306 | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
-	public System.Object Openflowsecondcontrollerconnectionssubscribedtransport_3306 { get { if (base.Columns.ContainsKey(5)) { return base.Columns[5]; } else { return null; } } set { if (base.Columns.ContainsKey(5)) { base.Columns[5] = value; } else { base.Columns.Add(5, value); } } }
+	public System.Object Openflowsecondcontrollerconnectionssubscribedtransportprotocol_3306 { get { if (base.Columns.ContainsKey(5)) { return base.Columns[5]; } else { return null; } } set { if (base.Columns.ContainsKey(5)) { base.Columns[5] = value; } else { base.Columns.Add(5, value); } } }
 	/// <summary>PID: 3306 | Type: read</summary>
-	public System.Object Openflowsecondcontrollerconnectionssubscribedtransport { get { if (base.Columns.ContainsKey(5)) { return base.Columns[5]; } else { return null; } } set { if (base.Columns.ContainsKey(5)) { base.Columns[5] = value; } else { base.Columns.Add(5, value); } } }
+	public System.Object Openflowsecondcontrollerconnectionssubscribedtransportprotocol { get { if (base.Columns.ContainsKey(5)) { return base.Columns[5]; } else { return null; } } set { if (base.Columns.ContainsKey(5)) { base.Columns[5] = value; } else { base.Columns.Add(5, value); } } }
 	/// <summary>PID: 3307 | Type: read</summary>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public System.Object Openflowsecondcontrollerconnectionssubscribedcertificateid_3307 { get { if (base.Columns.ContainsKey(6)) { return base.Columns[6]; } else { return null; } } set { if (base.Columns.ContainsKey(6)) { base.Columns[6] = value; } else { base.Columns.Add(6, value); } } }

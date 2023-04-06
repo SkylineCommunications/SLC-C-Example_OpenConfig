@@ -1,6 +1,6 @@
 ﻿namespace QAction_399.Utilities
 {
-	using Skyline.DataMiner.Helper.OpenConfig.Utils;
+	using Skyline.DataMiner.DataSources.OpenConfig.Gnmi.Utils;
 	using Skyline.DataMiner.Scripting;
 
 	/// <summary>
