@@ -41,6 +41,8 @@ public sealed class QAction : IDisposable
 	/// </summary>
 	private GnmiClient gnmiClient;
 
+	private DataSourceConfiguration clientConfig;
+
 	private DataMinerConnectorDataMapper dataMapper;
 
 	/// <summary>
@@ -188,24 +190,14 @@ public sealed class QAction : IDisposable
 			{
 				ILogger logger = new MiddleWareLogger(protocol);
 				gnmiClient = new GnmiClient((uint)protocol.DataMinerID, (uint)protocol.ElementID, protocol.ElementName, config, logger);
+				clientConfig = config;
 				SetupDataMapper(protocol);
 				gnmiClient.SetDataMapper(dataMapper);
 				gnmiClient.ConnectionStateChanged += GnmiClientOnConnectionStateChanged;
 			}
 			else
 			{
-				try
-				{
-					// Only changes the configuration internally if it's different.
-					isConnecting = true;
-					gnmiClient.ChangeConfiguration(config);
-					isConnecting = false;
-				}
-				catch
-				{
-					isConnecting = false;
-					throw;
-				}
+				VerifyConnectionConfiguration(config);
 			}
 
 			if (!gnmiClient.IsConnected)
@@ -225,6 +217,31 @@ public sealed class QAction : IDisposable
 			}
 
 			return gnmiClient;
+		}
+	}
+
+	/// <summary>
+	/// Changes the configuration on the gNMI client in case the settings changed.
+	/// </summary>
+	/// <param name="config">New configuration for the gNMI client.</param>
+	private void VerifyConnectionConfiguration(DataSourceConfiguration config)
+	{
+		if (config.Equals(clientConfig))
+		{
+			return;
+		}
+
+		try
+		{
+			isConnecting = true; // Changing configuration means a reconnect internally.
+			gnmiClient.ChangeConfiguration(config);
+			clientConfig = config;
+			isConnecting = false;
+		}
+		catch
+		{
+			isConnecting = false;
+			throw;
 		}
 	}
 
