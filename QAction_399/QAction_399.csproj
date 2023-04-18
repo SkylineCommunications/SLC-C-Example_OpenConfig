@@ -79,7 +79,7 @@
       <Version>2.48.0</Version>
     </PackageReference>
     <PackageReference Include="Skyline.DataMiner.DataSources.OpenConfig.Gnmi.Protocol">
-      <Version>0.0.1-90.4690.4.1</Version>
+      <Version>0.1.0-0.0.X.34</Version>
     </PackageReference>
     <PackageReference Include="Skyline.DataMiner.Dev.Protocol">
       <Version>10.3.3</Version>
@@ -96,7 +96,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties DisLinkId="399" DisProjectType="qactionProject" DisLinkedXmlFile="..\protocol.xml" />
+      <UserProperties DisLinkedXmlFile="..\protocol.xml" DisProjectType="qactionProject" DisLinkId="399" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
