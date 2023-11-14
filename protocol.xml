@@ -46,7 +46,7 @@ Any inquiries can be addressed to:
 <Protocol xmlns="http://www.skyline.be/protocol">
 	<Name>SLC SDF OpenConfig</Name>
 	<Description>SLC SDF OpenConfig</Description>
-	<Version>1.0.0.1</Version>
+	<Version>1.0.0.2</Version>
 	<IntegrationID>DMS-DRV-0000</IntegrationID>
 	<Provider>Skyline Communications</Provider>
 	<Vendor>Skyline Communications</Vendor>
@@ -3631,6 +3631,21 @@ The lower 48-bits are for a MAC address, while the upper 16-bits are implementer
 										</Changes>
 										<References>
 											<TaskId>202474</TaskId>
+										</References>
+									</MinorVersion>
+									<MinorVersion id="2">
+										<Date>2023-11-14</Date>
+										<Provider>
+											<Author>LMO</Author>
+											<Company>Skyline Communications</Company>
+										</Provider>
+										<Changes>
+											<Change>Uses OpenConfig Library version 2.0.0</Change>
+											<Change>Removed model prefix from DataMinerDataGridColumns path</Change>
+											<Change>Removed aux-id suffix from Openflow Main Controller Connections DataMinerDataGrid path</Change>
+										</Changes>
+										<References>
+											<TaskId>224976</TaskId>
 										</References>
 									</MinorVersion>
 								</MinorVersions>

@@ -163,7 +163,7 @@ public sealed class QAction : IDisposable
 				client.Subscribe(SYSTEM_SUBSCRIPTION_NAME, new[] { dataMapper.GetPathForPid(Parameter.systemstatecurrentdatetime) });  // The datetime is the only value that updates on the Onos (once per second). Path is known by the DataMapper, parameter value will be filled in automatically and no further parsing will be needed.
 				client.Subscribe(OPENFLOW_SUBSCRIPTION_NAME, sampleInterval, new[] { "system/openflow/controllers/controller[name='second']/connections" }, tableCallback.HandleIncomingResponseOpenflow); // Path is not known by the DataMapper, this will need to be parsed manually in HandleIncomingResponseOpenflow.
 
-				// client.Subscribe("interfaces", sampleIntervalMs, interfaceGroup); // Note, the Onos throws an error when subscribing to this table, breaking communication.
+				// client.Subscribe("interfaces", sampleInterval, interfaceGroup); // Note, the Onos throws an error when subscribing to this table, breaking communication.
 				isSubscribed = true;
 			}
 		}
@@ -348,16 +348,16 @@ public sealed class QAction : IDisposable
 				new DataMinerConnectorParameter("system/openflow/agent/config/backoff-interval", Parameter.openflowbackoffinterval_3002),
 				new DataMinerConnectorParameter("system/openflow/agent/config/max-backoff", Parameter.openflowmaxbackoff_3003),
 				new DataMinerConnectorParameter("system/openflow/agent/config/inactivity-probe", Parameter.openflowinactivityprobeperiod_3004),
-				new DataMinerConnectorDataGrid("system/openflow/controllers/controller[name='main']/connections/openconfig-openflow:connection<aux-id>", Parameter.Openflowmaincontrollerconnections.tablePid, new List<IDataMinerConnectorDataGridColumn>
+				new DataMinerConnectorDataGrid("system/openflow/controllers/controller[name='main']/connections/connection/state", Parameter.Openflowmaincontrollerconnections.tablePid, new List<IDataMinerConnectorDataGridColumn>
 				{
-					new DataMinerConnectorDataGridColumn("state/aux-id", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsauxiliaryid, notAvailable),
-					new DataMinerConnectorDataGridColumn("state/priority", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionspriority, notAvailable),
-					new DataMinerConnectorDataGridColumn("state/address", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsipaddress, notAvailable),
-					new DataMinerConnectorDataGridColumn("state/port", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsport, notAvailable),
-					new DataMinerConnectorDataGridColumn("state/transport", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionstransportprotocol, notAvailable) { OnRawValueChange = tableCallback.ConvertTransportType },
-					new DataMinerConnectorDataGridColumn("state/certificate-id", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionscertificateid, notAvailable),
-					new DataMinerConnectorDataGridColumn("state/source-interface", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionssourceinterface, notAvailable),
-					new DataMinerConnectorDataGridColumn("state/connected", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsstate, notAvailable) { OnRawValueChange = ConnectionTableCallback.ConvertBoolType },
+					new DataMinerConnectorDataGridColumn("aux-id", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsauxiliaryid, notAvailable),
+					new DataMinerConnectorDataGridColumn("priority", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionspriority, notAvailable),
+					new DataMinerConnectorDataGridColumn("address", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsipaddress, notAvailable),
+					new DataMinerConnectorDataGridColumn("port", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsport, notAvailable),
+					new DataMinerConnectorDataGridColumn("transport", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionstransportprotocol, notAvailable) { OnRawValueChange = tableCallback.ConvertTransportType },
+					new DataMinerConnectorDataGridColumn("certificate-id", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionscertificateid, notAvailable),
+					new DataMinerConnectorDataGridColumn("source-interface", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionssourceinterface, notAvailable),
+					new DataMinerConnectorDataGridColumn("connected", Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsstate, notAvailable) { OnRawValueChange = ConnectionTableCallback.ConvertBoolType },
 					new DataMinerConnectorDataGridColumn(Parameter.Openflowmaincontrollerconnections.Pid.openflowmaincontrollerconnectionsdisplaykey, notAvailable)
 					{
 						OnTriggerValueChange = ConnectionTableCallback.CreateKey,
@@ -371,33 +371,33 @@ public sealed class QAction : IDisposable
 				}),
 				new DataMinerConnectorDataGrid("interfaces/interface/state", Parameter.Interfacesstate.tablePid, new List<IDataMinerConnectorDataGridColumn>
 				{
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:type", Parameter.Interfacesstate.Pid.interfacesstatetype, notAvailable),
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:mtu", Parameter.Interfacesstate.Pid.interfacesstatemtu, notAvailable),
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:loopback-mode", Parameter.Interfacesstate.Pid.interfacesstateloopbackmode, notAvailable) { OnRawValueChange = ValueConverter.ConvertBoolToNumber },
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:description", Parameter.Interfacesstate.Pid.interfacesstatedescription, notAvailable),
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:enabled", Parameter.Interfacesstate.Pid.interfacesstatestate, notAvailable) { OnRawValueChange = ValueConverter.ConvertBoolToNumber },
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:ifindex", Parameter.Interfacesstate.Pid.interfacesstateifindex, notAvailable),
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:admin-status", Parameter.Interfacesstate.Pid.interfacesstateadminstatus, notAvailable) { OnRawValueChange = ValueConverter.ConvertToAdminStateEnumValue },
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:oper-status", Parameter.Interfacesstate.Pid.interfacesstateoperstatus, notAvailable) { OnRawValueChange = ValueConverter.ConvertToOperStateEnumValue },
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:last-change", Parameter.Interfacesstate.Pid.interfacesstatelastchange, notAvailable) { OnRawValueChange = ValueConverter.ConvertEpochTimeUtcTicksToOadate },
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:logical", Parameter.Interfacesstate.Pid.interfacesstatelogical, notAvailable) { OnRawValueChange = ValueConverter.ConvertBoolToNumber },
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:counters/in-octets", Parameter.Interfacesstate.Pid.interfacesstateinoctets, notAvailable) { RateCalculator = ValueConverter.CustomBitRates, RateColumnParameterId = Parameter.Interfacesstate.Pid.interfacesstateinbitrate },
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:counters/in-pkts", Parameter.Interfacesstate.Pid.interfacesstateinpckts, notAvailable),
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:counters/in-unicast-pkts", Parameter.Interfacesstate.Pid.interfacesstateinunicastpckts, notAvailable),
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:counters/in-broadcast-pkts", Parameter.Interfacesstate.Pid.interfacesstateinbroadcastpckts, notAvailable),
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:counters/in-multicast-pkts", Parameter.Interfacesstate.Pid.interfacesstateinmulticastpckts, notAvailable),
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:counters/in-discards", Parameter.Interfacesstate.Pid.interfacesstateindiscards, notAvailable),
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:counters/in-errors", Parameter.Interfacesstate.Pid.interfacesstateinerrors, notAvailable) { RateCalculator = ValueConverter.CustomErrorRates, RateColumnParameterId = Parameter.Interfacesstate.Pid.interfacesstateinerrorrate },
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:counters/in-unknown-protos", Parameter.Interfacesstate.Pid.interfacesstateinunknownprotos, notAvailable),
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:counters/in-fcs-errors", Parameter.Interfacesstate.Pid.interfacesstateinfcserrors, notAvailable),
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:counters/out-broadcast-pkts", Parameter.Interfacesstate.Pid.interfacesstateoutbroadcastpckts, notAvailable),
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:counters/out-discards", Parameter.Interfacesstate.Pid.interfacesstateoutdiscards, notAvailable),
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:counters/out-errors", Parameter.Interfacesstate.Pid.interfacesstateouterrors, notAvailable) { RateCalculator = ValueConverter.CustomErrorRates, RateColumnParameterId = Parameter.Interfacesstate.Pid.interfacesstateouterrorrate },
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:counters/out-multicast-pkts", Parameter.Interfacesstate.Pid.interfacesstateoutmulticastpckts, notAvailable),
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:counters/out-octets", Parameter.Interfacesstate.Pid.interfacesstateoutoctets, notAvailable) { RateCalculator = ValueConverter.CustomBitRates, RateColumnParameterId = Parameter.Interfacesstate.Pid.interfacesstateoutbitrate },
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:counters/out-pkts", Parameter.Interfacesstate.Pid.interfacesstateoutpckts, notAvailable),
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:counters/out-unicast-pkts", Parameter.Interfacesstate.Pid.interfacesstateoutunicastpckts, notAvailable),
-					new DataMinerConnectorDataGridColumn("openconfig-interfaces:counters/last-clear", Parameter.Interfacesstate.Pid.interfacesstatelastclear, notAvailable) { OnRawValueChange = ValueConverter.ConvertEpochTimeUtcTicksToOadate },
+					new DataMinerConnectorDataGridColumn("type", Parameter.Interfacesstate.Pid.interfacesstatetype, notAvailable),
+					new DataMinerConnectorDataGridColumn("mtu", Parameter.Interfacesstate.Pid.interfacesstatemtu, notAvailable),
+					new DataMinerConnectorDataGridColumn("loopback-mode", Parameter.Interfacesstate.Pid.interfacesstateloopbackmode, notAvailable) { OnRawValueChange = ValueConverter.ConvertBoolToNumber },
+					new DataMinerConnectorDataGridColumn("description", Parameter.Interfacesstate.Pid.interfacesstatedescription, notAvailable),
+					new DataMinerConnectorDataGridColumn("enabled", Parameter.Interfacesstate.Pid.interfacesstatestate, notAvailable) { OnRawValueChange = ValueConverter.ConvertBoolToNumber },
+					new DataMinerConnectorDataGridColumn("ifindex", Parameter.Interfacesstate.Pid.interfacesstateifindex, notAvailable),
+					new DataMinerConnectorDataGridColumn("admin-status", Parameter.Interfacesstate.Pid.interfacesstateadminstatus, notAvailable) { OnRawValueChange = ValueConverter.ConvertToAdminStateEnumValue },
+					new DataMinerConnectorDataGridColumn("oper-status", Parameter.Interfacesstate.Pid.interfacesstateoperstatus, notAvailable) { OnRawValueChange = ValueConverter.ConvertToOperStateEnumValue },
+					new DataMinerConnectorDataGridColumn("last-change", Parameter.Interfacesstate.Pid.interfacesstatelastchange, notAvailable) { OnRawValueChange = ValueConverter.ConvertEpochTimeUtcTicksToOadate },
+					new DataMinerConnectorDataGridColumn("logical", Parameter.Interfacesstate.Pid.interfacesstatelogical, notAvailable) { OnRawValueChange = ValueConverter.ConvertBoolToNumber },
+					new DataMinerConnectorDataGridColumn("counters/in-octets", Parameter.Interfacesstate.Pid.interfacesstateinoctets, notAvailable) { RateCalculator = ValueConverter.CustomBitRates, RateColumnParameterId = Parameter.Interfacesstate.Pid.interfacesstateinbitrate },
+					new DataMinerConnectorDataGridColumn("counters/in-pkts", Parameter.Interfacesstate.Pid.interfacesstateinpckts, notAvailable),
+					new DataMinerConnectorDataGridColumn("counters/in-unicast-pkts", Parameter.Interfacesstate.Pid.interfacesstateinunicastpckts, notAvailable),
+					new DataMinerConnectorDataGridColumn("counters/in-broadcast-pkts", Parameter.Interfacesstate.Pid.interfacesstateinbroadcastpckts, notAvailable),
+					new DataMinerConnectorDataGridColumn("counters/in-multicast-pkts", Parameter.Interfacesstate.Pid.interfacesstateinmulticastpckts, notAvailable),
+					new DataMinerConnectorDataGridColumn("counters/in-discards", Parameter.Interfacesstate.Pid.interfacesstateindiscards, notAvailable),
+					new DataMinerConnectorDataGridColumn("counters/in-errors", Parameter.Interfacesstate.Pid.interfacesstateinerrors, notAvailable) { RateCalculator = ValueConverter.CustomErrorRates, RateColumnParameterId = Parameter.Interfacesstate.Pid.interfacesstateinerrorrate },
+					new DataMinerConnectorDataGridColumn("counters/in-unknown-protos", Parameter.Interfacesstate.Pid.interfacesstateinunknownprotos, notAvailable),
+					new DataMinerConnectorDataGridColumn("counters/in-fcs-errors", Parameter.Interfacesstate.Pid.interfacesstateinfcserrors, notAvailable),
+					new DataMinerConnectorDataGridColumn("counters/out-broadcast-pkts", Parameter.Interfacesstate.Pid.interfacesstateoutbroadcastpckts, notAvailable),
+					new DataMinerConnectorDataGridColumn("counters/out-discards", Parameter.Interfacesstate.Pid.interfacesstateoutdiscards, notAvailable),
+					new DataMinerConnectorDataGridColumn("counters/out-errors", Parameter.Interfacesstate.Pid.interfacesstateouterrors, notAvailable) { RateCalculator = ValueConverter.CustomErrorRates, RateColumnParameterId = Parameter.Interfacesstate.Pid.interfacesstateouterrorrate },
+					new DataMinerConnectorDataGridColumn("counters/out-multicast-pkts", Parameter.Interfacesstate.Pid.interfacesstateoutmulticastpckts, notAvailable),
+					new DataMinerConnectorDataGridColumn("counters/out-octets", Parameter.Interfacesstate.Pid.interfacesstateoutoctets, notAvailable) { RateCalculator = ValueConverter.CustomBitRates, RateColumnParameterId = Parameter.Interfacesstate.Pid.interfacesstateoutbitrate },
+					new DataMinerConnectorDataGridColumn("counters/out-pkts", Parameter.Interfacesstate.Pid.interfacesstateoutpckts, notAvailable),
+					new DataMinerConnectorDataGridColumn("counters/out-unicast-pkts", Parameter.Interfacesstate.Pid.interfacesstateoutunicastpckts, notAvailable),
+					new DataMinerConnectorDataGridColumn("counters/last-clear", Parameter.Interfacesstate.Pid.interfacesstatelastclear, notAvailable) { OnRawValueChange = ValueConverter.ConvertEpochTimeUtcTicksToOadate },
 					new DataMinerConnectorDataGridColumn(Parameter.Interfacesstate.Pid.interfacesstatedisplaykey, notAvailable) { OnTriggerValueChange = ValueConverter.CreateDisplayKey, TriggerColumnParameterIds = new List<int> { Parameter.Interfacesstate.Pid.interfacesstatedescription } },
 					new DataMinerConnectorDataGridColumn(Parameter.Interfacesstate.Pid.interfacesstateinbitrate, notAvailable),
 					new DataMinerConnectorDataGridColumn(Parameter.Interfacesstate.Pid.interfacesstateoutbitrate, notAvailable),
@@ -416,8 +416,17 @@ public sealed class QAction : IDisposable
 		systemGroup.Add(dataMapper.GetPathForPid(Parameter.openflowmaxbackoff));
 		systemGroup.Add(dataMapper.GetPathForPid(Parameter.openflowinactivityprobeperiod));
 
+		// Open flow is a special case on the Onos: polling needs to happen on system/openflow/controllers/controller/connections while the table is located under /connection/state, but the Onos doesn't allow to poll that path so it needs to be removed before polling but needs to remain in the DataMapper.
+		var openflowPath = dataMapper.GetPathForPid(Parameter.Openflowmaincontrollerconnections.tablePid);
+		int openflowPathCount = (openflowPath?.Elem?.Count).GetValueOrDefault(0);
+		if (openflowPathCount > 2)
+		{
+			openflowPath.Elem.RemoveAt(openflowPathCount - 1);
+			openflowPath.Elem.RemoveAt(openflowPathCount - 2);
+		}
+
 		openflowGroup.Clear();
-		openflowGroup.Add(dataMapper.GetPathForPid(Parameter.Openflowmaincontrollerconnections.tablePid));
+		openflowGroup.Add(openflowPath);
 
 		interfaceGroup.Clear();
 		interfaceGroup.Add(dataMapper.GetPathForPid(Parameter.Interfacesstate.tablePid));
