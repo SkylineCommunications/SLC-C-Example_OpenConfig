@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using QAction_399.ModelHelpers;
 using QAction_399.Utilities;
+using Skyline.DataMiner.DataSources.CommunicationGatewayMiddleware.Common.Api;
 using Skyline.DataMiner.DataSources.OpenConfig.Gnmi.Api;
-using Skyline.DataMiner.DataSources.OpenConfig.Gnmi.Models;
 using Skyline.DataMiner.DataSources.OpenConfig.Gnmi.Protocol.DataMapper;
-using Skyline.DataMiner.DataSources.OpenConfig.Gnmi.Utils;
 using Skyline.DataMiner.Scripting;
 
 /// <summary>

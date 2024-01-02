@@ -46,7 +46,7 @@ Any inquiries can be addressed to:
 <Protocol xmlns="http://www.skyline.be/protocol">
 	<Name>SLC SDF OpenConfig</Name>
 	<Description>SLC SDF OpenConfig</Description>
-	<Version>1.0.0.2</Version>
+	<Version>1.0.0.3</Version>
 	<IntegrationID>DMS-DRV-0000</IntegrationID>
 	<Provider>Skyline Communications</Provider>
 	<Vendor>Skyline Communications</Vendor>
@@ -3646,6 +3646,19 @@ The lower 48-bits are for a MAC address, while the upper 16-bits are implementer
 										</Changes>
 										<References>
 											<TaskId>224976</TaskId>
+										</References>
+									</MinorVersion>
+									<MinorVersion id="3" basedOn="1.0.0.2">
+										<Date>2024-01-04</Date>
+										<Provider>
+											<Author>FCO</Author>
+											<Company>Skyline Communications</Company>
+										</Provider>
+										<Changes>
+											<Change>Upgrade Skyline.DataMiner.DataSources.OpenConfig.Gnmi.Protocol to version 3.0.0 to make use of the generated middleware.</Change>
+										</Changes>
+										<References>
+											<TaskId>227323</TaskId>
 										</References>
 									</MinorVersion>
 								</MinorVersions>
